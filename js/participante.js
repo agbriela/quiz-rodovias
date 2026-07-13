@@ -1,27 +1,19 @@
+import { db } from "./firebase-config.js";
+
 import {
-    onSnapshot,
     doc,
-    updateDoc
-}
-from
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    getDoc,
+    updateDoc,
+    increment
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+let perguntas = [];
+let perguntaAtual = 0;
 let tempo = 20;
+let intervalo;
 
-function responder(indice) {
+const pergunta = document.getElementById("pergunta");
+const alternativas = document.getElementById("alternativas");
+const timer = document.getElementById("timer");
 
-    const pontos =
-        100 +
-        tempo * 5;
-
-    updateDoc(
-        doc(db,
-        "participantes",
-        localStorage.getItem(
-            "participante")),
-        {
-            pontos:
-                increment(pontos)
-        }
-    );
-}
+carregarPerguntas();
