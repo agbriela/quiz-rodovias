@@ -1,11 +1,115 @@
-<h1>🚧 Desafio Mestres da Rodovia</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
 
-<h2 id="numeroPergunta">
-Pergunta 1
-</h2>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<button id="proxima">
-Próxima Pergunta
-</button>
+    <title>Painel do Apresentador</title>
 
-<div id="ranking"></div>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="container apresentador-container">
+
+        <p class="painel-label">
+            Painel do apresentador
+        </p>
+
+        <h1>
+            🚧 Desafio Mestres da Rodovia
+        </h1>
+
+        <section class="status-jogo">
+
+            <div class="status-card">
+                <span>Status</span>
+
+                <strong id="status">
+                    Carregando...
+                </strong>
+            </div>
+
+            <div class="status-card">
+                <span>Pergunta</span>
+
+                <strong id="numeroPergunta">
+                    -
+                </strong>
+            </div>
+
+            <div class="status-card">
+                <span>Participantes</span>
+
+                <strong id="quantidadeParticipantes">
+                    0
+                </strong>
+            </div>
+
+        </section>
+
+        <section class="pergunta-apresentador">
+
+            <h2 id="textoPergunta">
+                Aguardando o início do jogo
+            </h2>
+
+            <div
+                id="alternativasApresentador"
+                class="alternativas-apresentador"
+            ></div>
+
+        </section>
+
+        <section class="controles-apresentador">
+
+            <button
+                type="button"
+                id="iniciar"
+                class="botao-controle"
+            >
+                ▶ Iniciar quiz
+            </button>
+
+            <button
+                type="button"
+                id="proxima"
+                class="botao-controle"
+            >
+                Próxima pergunta
+            </button>
+
+            <button
+                type="button"
+                id="mostrarRanking"
+                class="botao-secundario"
+            >
+                🏆 Abrir ranking
+            </button>
+
+            <button
+                type="button"
+                id="reiniciar"
+                class="botao-perigo"
+            >
+                Reiniciar quiz
+            </button>
+
+        </section>
+
+        <p id="mensagemPainel" class="mensagem-painel"></p>
+
+    </main>
+
+    <script
+        type="module"
+        src="js/apresentador.js"
+    ></script>
+
+</body>
+</html>
