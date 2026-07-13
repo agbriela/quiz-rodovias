@@ -1,1 +1,40 @@
+body {
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
 
+.container {
+    width:90%;
+    max-width:600px;
+    margin:auto;
+    padding:30px;
+    text-align:center;
+}
+
+button {
+    background:#5E22F3;
+    border:none;
+    padding:15px;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+button:hover {
+    transform:scale(1.05);
+}
+
+#timer {
+    font-size:50px;
+    margin:20px;
+}
+
+.alternativa {
+    background:#1e293b;
+    padding:20px;
+    margin:15px;
+    border-radius:10px;
+    cursor:pointer;
+}
