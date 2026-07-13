@@ -1,1 +1,24 @@
-
+[
+  {
+    "id": 1,
+    "pergunta": "Qual é o principal objetivo da sinalização temporária?",
+    "alternativas": [
+      "Aumentar a velocidade",
+      "Proteger usuários e trabalhadores",
+      "Melhorar a estética",
+      "Diminuir custos"
+    ],
+    "correta": 1
+  },
+  {
+    "id": 2,
+    "pergunta": "Qual EPI é obrigatório em atividades de pista?",
+    "alternativas": [
+      "Boné",
+      "Colete refletivo",
+      "Camiseta branca",
+      "Óculos escuros"
+    ],
+    "correta": 1
+  }
+]
