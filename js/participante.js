@@ -7,7 +7,7 @@ import {
     increment,
     getDoc,
     setDoc
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 let perguntas = [];
 let perguntaAtual = 0;
