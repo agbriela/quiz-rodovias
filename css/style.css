@@ -1,6 +1,3 @@
-/* =========================
-   PALETA DE CORES
-========================= */
 :root {
     --color-primary: #12603C;
     --color-primary-dark: #0B4429;
@@ -25,18 +22,13 @@
     --color-shadow: rgba(0, 0, 0, 0.4);
 }
 
-/* =========================
-   RESET
-========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* =========================
-   BODY
-========================= */
+
 body {
     font-family: Arial, Helvetica, sans-serif;
 
@@ -63,9 +55,6 @@ body {
     padding: 20px;
 }
 
-/* =========================
-   CONTAINER
-========================= */
 .container {
     width: 95%;
     max-width: 700px;
@@ -85,9 +74,6 @@ body {
     -webkit-backdrop-filter: blur(8px);
 }
 
-/* =========================
-   TÍTULOS
-========================= */
 h1 {
     margin-bottom: 30px;
     font-size: 2rem;
@@ -100,9 +86,6 @@ h2 {
     line-height: 1.4;
 }
 
-/* =========================
-   INPUTS
-========================= */
 input,
 select {
     width: 100%;
@@ -132,9 +115,6 @@ select:focus {
         0 0 0 4px rgba(124, 181, 24, 0.25);
 }
 
-/* =========================
-   BOTÕES
-========================= */
 button {
     width: 100%;
     padding: 18px;
@@ -186,16 +166,12 @@ button:disabled:hover {
     box-shadow: none;
 }
 
-/* =========================
-   QUIZ
-========================= */
+
 #quiz {
     margin-top: 20px;
 }
 
-/* =========================
-   BARRA DE PROGRESSO
-========================= */
+
 .progress {
     width: 100%;
     height: 14px;
@@ -227,9 +203,7 @@ button:disabled:hover {
     transition: width 0.4s ease;
 }
 
-/* =========================
-   CRONÔMETRO
-========================= */
+
 #timer {
     width: 120px;
     height: 120px;
@@ -253,9 +227,7 @@ button:disabled:hover {
         0 0 30px rgba(124, 181, 24, 0.5);
 }
 
-/* =========================
-   ALTERNATIVAS
-========================= */
+
 .alternativa {
     display: block;
     width: 100%;
@@ -304,9 +276,7 @@ button:disabled:hover {
     box-shadow: none;
 }
 
-/* =========================
-   RANKING
-========================= */
+
 .ranking-item {
     display: flex;
     justify-content: space-between;
@@ -332,9 +302,7 @@ button:disabled:hover {
     transform: translateY(-2px);
 }
 
-/* =========================
-   PAINEL DO APRESENTADOR
-========================= */
+
 .apresentador-container {
     max-width: 950px;
 }
@@ -351,9 +319,7 @@ button:disabled:hover {
     text-transform: uppercase;
 }
 
-/* =========================
-   CARDS DE STATUS
-========================= */
+
 .status-jogo {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -402,9 +368,7 @@ button:disabled:hover {
     font-size: 24px;
 }
 
-/* =========================
-   PERGUNTA DO APRESENTADOR
-========================= */
+
 .pergunta-apresentador {
     min-height: 260px;
 
@@ -459,9 +423,7 @@ button:disabled:hover {
     transform: translateY(-2px);
 }
 
-/* =========================
-   CONTROLES DO APRESENTADOR
-========================= */
+
 .controles-apresentador {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -496,9 +458,7 @@ button:disabled:hover {
         0 8px 20px rgba(217, 45, 32, 0.3);
 }
 
-/* =========================
-   MENSAGENS DO PAINEL
-========================= */
+
 .mensagem-painel {
     min-height: 24px;
 
@@ -513,9 +473,6 @@ button:disabled:hover {
     color: #FFB4AB;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
 @media (max-width: 768px) {
     body {
         align-items: flex-start;
@@ -572,9 +529,7 @@ button:disabled:hover {
     }
 }
 
-/* =========================
-   TELAS MUITO PEQUENAS
-========================= */
+
 @media (max-width: 420px) {
     body {
         padding: 10px;
