@@ -231,6 +231,4 @@ function finalizarQuiz() {
         "🏆 Quiz Finalizado!";
 
     alternativas.innerHTML = "";
-
-    timer.innerHTML = "";
 }
