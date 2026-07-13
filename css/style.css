@@ -1,26 +1,40 @@
+/* =========================
+   PALETA DE CORES
+========================= */
 :root {
     --color-primary: #12603C;
     --color-primary-dark: #0B4429;
     --color-accent: #7CB518;
-    --color-bg: #F5F7F1;
-    --color-text: #15211B;
+
+    --color-bg-1: #071F13;
+    --color-bg-2: #0B4429;
+    --color-bg-3: #12603C;
+
+    --color-text: #FFFFFF;
+    --color-card: rgba(11, 68, 41, 0.88);
 }
 
-/* RESET */
+/* =========================
+   RESET
+========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* =========================
+   BODY
+========================= */
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(
         135deg,
-        var(--color-bg),
-        #DCE6DD,
-        #C9D8CC
+        var(--color-bg-1),
+        var(--color-bg-2),
+        var(--color-bg-3)
     );
+
     color: var(--color-text);
     min-height: 100vh;
 
@@ -29,21 +43,29 @@ body {
     align-items: center;
 }
 
-/* CONTAINER */
+/* =========================
+   CONTAINER
+========================= */
 .container {
     width: 95%;
     max-width: 700px;
     padding: 40px;
-    background: rgba(18, 96, 60, 0.95);
+
+    background: var(--color-card);
+
     border-radius: 25px;
+
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.2);
+        0 10px 30px rgba(0, 0, 0, 0.4);
 
     text-align: center;
-    color: white;
+
+    backdrop-filter: blur(8px);
 }
 
-/* TÍTULOS */
+/* =========================
+   TÍTULOS
+========================= */
 h1 {
     margin-bottom: 30px;
     font-size: 2rem;
@@ -55,50 +77,81 @@ h2 {
     line-height: 1.4;
 }
 
-/* INPUTS */
+/* =========================
+   INPUTS
+========================= */
 input,
 select {
     width: 100%;
     padding: 18px;
     margin-bottom: 20px;
-    border: 2px solid #D7E2D9;
+
+    border: none;
     border-radius: 12px;
+
     font-size: 18px;
-    background: white;
-    color: var(--color-text);
+
+    background: #ffffff;
+    color: #222;
 }
 
-/* BOTÕES GERAIS */
+input:focus,
+select:focus {
+    outline: 3px solid rgba(124, 181, 24, 0.4);
+}
+
+/* =========================
+   BOTÕES
+========================= */
 button {
     width: 100%;
-    background: var(--color-accent);
+    background: var(--color-primary);
+
     border: none;
-    padding: 18px;
-    color: white;
     border-radius: 12px;
-    cursor: pointer;
+
+    padding: 18px;
+
+    color: white;
     font-size: 18px;
     font-weight: bold;
 
-    transition: all 0.3s;
+    cursor: pointer;
+
+    transition:
+        background 0.3s,
+        transform 0.3s,
+        box-shadow 0.3s;
 }
 
 button:hover {
+    background: var(--color-accent);
     transform: scale(1.03);
-    background: var(--color-primary-dark);
+
+    box-shadow:
+        0 8px 20px rgba(124, 181, 24, 0.35);
 }
 
-/* QUIZ */
+button:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   QUIZ
+========================= */
 #quiz {
     margin-top: 20px;
 }
 
-/* CRONÔMETRO */
+/* =========================
+   CRONÔMETRO
+========================= */
 #timer {
     width: 120px;
     height: 120px;
 
     margin: 30px auto;
+
     border-radius: 50%;
 
     background: var(--color-accent);
@@ -112,10 +165,12 @@ button:hover {
     font-weight: bold;
 
     box-shadow:
-        0 0 30px rgba(124, 181, 24, 0.4);
+        0 0 30px rgba(124, 181, 24, 0.5);
 }
 
-/* ALTERNATIVAS */
+/* =========================
+   ALTERNATIVAS
+========================= */
 .alternativa {
     display: block;
     width: 100%;
@@ -123,7 +178,7 @@ button:hover {
     margin-top: 15px;
     padding: 20px;
 
-    background: var(--color-primary);
+    background: var(--color-primary-dark);
     color: white;
 
     border: 2px solid transparent;
@@ -132,26 +187,47 @@ button:hover {
     font-size: 18px;
     font-weight: bold;
 
-    transition: all 0.3s;
+    cursor: pointer;
+
+    transition:
+        background 0.3s,
+        border-color 0.3s,
+        transform 0.3s,
+        box-shadow 0.3s;
 }
 
 .alternativa:hover {
-    background: var(--color-primary-dark);
+    background: var(--color-primary);
+
     border-color: var(--color-accent);
+
     transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* RANKING */
+/* =========================
+   RANKING
+========================= */
 .ranking-item {
-    background: rgba(18, 96, 60, 0.15);
-    border: 1px solid rgba(18, 96, 60, 0.3);
-    color: var(--color-text);
+    background: var(--color-primary-dark);
+
     padding: 15px;
-    border-radius: 12px;
     margin-top: 10px;
+
+    border-radius: 12px;
+
+    transition: 0.3s;
 }
 
-/* RESPONSIVO */
+.ranking-item:hover {
+    background: var(--color-primary);
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
 @media (max-width: 768px) {
     .container {
         width: 95%;
