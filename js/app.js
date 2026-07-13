@@ -6,7 +6,7 @@ import {
     collection,
     addDoc
 } from
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 document
 .getElementById("entrar")
