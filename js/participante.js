@@ -26,7 +26,6 @@ const timer =
 const barra =
     document.getElementById("barra");
 
-// Carrega as perguntas
 carregarPerguntas();
 
 async function carregarPerguntas() {
@@ -40,7 +39,6 @@ async function carregarPerguntas() {
     escutarPergunta();
 }
 
-// Escuta a pergunta atual do Firebase
 function escutarPergunta() {
 
     const ref =
@@ -62,7 +60,6 @@ function escutarPergunta() {
     });
 }
 
-// Carrega a pergunta na tela
 function carregarPergunta() {
 
     clearInterval(intervalo);
@@ -100,7 +97,6 @@ function carregarPergunta() {
     iniciarTimer();
 }
 
-// Cronômetro
 function iniciarTimer() {
 
     timer.innerHTML = tempo;
@@ -121,7 +117,6 @@ function iniciarTimer() {
     }, 1000);
 }
 
-// Responde uma pergunta
 async function responder(indice) {
 
     const participanteId =
@@ -141,7 +136,6 @@ async function responder(indice) {
     const respostaSalva =
         await getDoc(respostaRef);
 
-    // Já respondeu esta pergunta
     if (
         respostaSalva.exists() &&
         respostaSalva.data().pergunta ===
@@ -194,7 +188,6 @@ async function responder(indice) {
     desabilitarBotoes();
 }
 
-// Desabilita as alternativas
 function desabilitarBotoes() {
 
     const botoes =
@@ -208,7 +201,6 @@ function desabilitarBotoes() {
     );
 }
 
-// Atualiza a barra de progresso
 function atualizarBarra() {
 
     if (!barra) return;
@@ -222,7 +214,6 @@ function atualizarBarra() {
         porcentagem + "%";
 }
 
-// Finaliza o quiz
 function finalizarQuiz() {
 
     clearInterval(intervalo);
