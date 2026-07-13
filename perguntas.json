@@ -1,23 +1,23 @@
 [
   {
     "id": 1,
-    "pergunta": "Qual é o principal objetivo da sinalização temporária?",
+    "pergunta": "A partir de qual análise se determina a contingência do projeto no MP2?",
     "alternativas": [
-      "Aumentar a velocidade",
-      "Proteger usuários e trabalhadores",
-      "Melhorar a estética",
-      "Diminuir custos"
+      "Da análise quantitativa de riscos, que determina a contingência (P80) registrada para monitoramento e controle.",
+      "O Plano de Negócios (Orçamento de Referência), estruturado em EAP e cadastrado no sistema",
+      "Emitir parecer independente de maturidade (aprovado / com ressalvas / reprovado). É insumo obrigatório para a deliberação — não substitui a decisão do fórum.",
+      "A GDN / Desenvolvimento de Novos Negócios, com apoio de consultorias e projetistas e articulação com a GCI-CPL"
     ],
     "correta": 1
   },
   {
     "id": 2,
-    "pergunta": "Qual EPI é obrigatório em atividades de pista?",
+    "pergunta": "O que o Cost Control avalia no assurance de estimativas?",
     "alternativas": [
-      "Boné",
-      "Colete refletivo",
-      "Camiseta branca",
-      "Óculos escuros"
+      "A consistência entre escopo e orçamento, o benchmark de custos unitários e a completude dos planos de resposta a risco — recomendando ajustes antes do Gate.",
+      "A GCI-COC junto ao GEN (gestor do contrato), a partir dos projetos entregues pelas projetistas.",
+      "Quick Win: relatório de controle de maturidade dos projetos.",
+      "Assurance da estratégia de contratação e governança das mudanças relevantes de CAPEX."
     ],
     "correta": 1
   }
