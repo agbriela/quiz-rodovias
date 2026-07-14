@@ -5,6 +5,10 @@ import {
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
+/* =========================
+   ELEMENTOS DA PÁGINA
+========================= */
+
 const rankingElemento =
     document.getElementById("ranking");
 
@@ -20,28 +24,25 @@ const totalPontosElemento =
 const mensagemRankingElemento =
     document.getElementById("mensagemRanking");
 
-const participantesRef =
-    collection(db, "participantes");
+/* =========================
+   FIRESTORE EM TEMPO REAL
+========================= */
 
 onSnapshot(
-    participantesRef,
+    collection(db, "participantes"),
 
     snapshot => {
         const participantes = [];
 
-        snapshot.forEach(
-            documento => {
-                participantes.push({
-                    id: documento.id,
-                    ...documento.data()
-                });
-            }
-        );
+        snapshot.forEach(documento => {
+            participantes.push({
+                id: documento.id,
+                ...documento.data()
+            });
+        });
 
         const equipes =
-            agruparParticipantesPorEquipe(
-                participantes
-            );
+            agruparPorEquipe(participantes);
 
         atualizarResumo(
             participantes,
@@ -59,64 +60,81 @@ onSnapshot(
 
         rankingElemento.innerHTML = "";
 
-        mensagemRankingElemento.textContent =
-            "Não foi possível carregar o ranking.";
+        if (mensagemRankingElemento) {
+            mensagemRankingElemento.textContent =
+                "Não foi possível carregar o ranking.";
 
-        mensagemRankingElemento.classList.add(
-            "mensagem-erro"
-        );
+            mensagemRankingElemento.classList.add(
+                "mensagem-erro"
+            );
+        }
     }
 );
 
-function agruparParticipantesPorEquipe(
-    participantes
-) {
-    const equipesAgrupadas = {};
+/* =========================
+   AGRUPAMENTO DAS EQUIPES
+========================= */
 
-    participantes.forEach(
-        participante => {
-            const nomeEquipe =
-                normalizarNomeEquipe(
-                    participante.equipe
-                );
+function agruparPorEquipe(participantes) {
+    const mapaEquipes = new Map();
 
-            if (!equipesAgrupadas[nomeEquipe]) {
-                equipesAgrupadas[nomeEquipe] = {
-                    nome: nomeEquipe,
+    participantes.forEach(participante => {
+        const equipeOriginal =
+            String(
+                participante.equipe ??
+                "Sem equipe"
+            ).trim();
+
+        /*
+         * Esta chave evita separar equipes por
+         * maiúsculas, minúsculas ou espaços.
+         *
+         * Exemplo:
+         * "Faixa Expressa"
+         * "faixa expressa"
+         * " FAIXA EXPRESSA "
+         */
+        const chaveEquipe =
+            normalizarEquipe(equipeOriginal);
+
+        if (!mapaEquipes.has(chaveEquipe)) {
+            mapaEquipes.set(
+                chaveEquipe,
+                {
+                    nome:
+                        equipeOriginal ||
+                        "Sem equipe",
+
                     pontos: 0,
+
                     participantes: 0,
+
                     integrantes: []
-                };
-            }
-
-            const pontosParticipante =
-                Number(
-                    participante.pontos ?? 0
-                );
-
-            equipesAgrupadas[nomeEquipe].pontos +=
-                pontosParticipante;
-
-            equipesAgrupadas[nomeEquipe].participantes++;
-
-            equipesAgrupadas[nomeEquipe].integrantes.push({
-                nome:
-                    participante.nome ??
-                    "Participante",
-                pontos:
-                    pontosParticipante
-            });
+                }
+            );
         }
-    );
 
-    return Object.values(
-        equipesAgrupadas
-    ).sort(
-        (equipeA, equipeB) => {
-            /*
-             * Primeiro critério:
-             * maior pontuação total.
-             */
+        const equipe =
+            mapaEquipes.get(chaveEquipe);
+
+        const pontos =
+            Number(participante.pontos) || 0;
+
+        equipe.pontos += pontos;
+        equipe.participantes += 1;
+
+        equipe.integrantes.push({
+            nome:
+                participante.nome ??
+                "Participante",
+
+            pontos
+        });
+    });
+
+    return Array
+        .from(mapaEquipes.values())
+        .sort((equipeA, equipeB) => {
             if (
                 equipeB.pontos !==
                 equipeA.pontos
@@ -127,34 +145,25 @@ function agruparParticipantesPorEquipe(
                 );
             }
 
-            /*
-             * Desempate:
-             * equipe com menos participantes.
-             */
-            if (
-                equipeA.participantes !==
-                equipeB.participantes
-            ) {
-                return (
-                    equipeA.participantes -
-                    equipeB.participantes
-                );
-            }
-
             return equipeA.nome.localeCompare(
                 equipeB.nome,
                 "pt-BR"
             );
-        }
-    );
+        });
 }
 
-function normalizarNomeEquipe(equipe) {
-    const nome =
-        String(equipe ?? "").trim();
-
-    return nome || "Sem equipe";
+function normalizarEquipe(nome) {
+    return String(nome)
+        .trim()
+        .toLocaleLowerCase("pt-BR")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ");
 }
+
+/* =========================
+   RESUMO
+========================= */
 
 function atualizarResumo(
     participantes,
@@ -165,9 +174,9 @@ function atualizarResumo(
             (total, participante) => {
                 return (
                     total +
-                    Number(
-                        participante.pontos ?? 0
-                    )
+                    (Number(
+                        participante.pontos
+                    ) || 0)
                 );
             },
             0
@@ -183,23 +192,26 @@ function atualizarResumo(
         formatarNumero(totalPontos);
 }
 
+/* =========================
+   RENDERIZAR RANKING
+========================= */
+
 function renderizarRanking(equipes) {
     rankingElemento.innerHTML = "";
 
-    mensagemRankingElemento.textContent = "";
+    if (mensagemRankingElemento) {
+        mensagemRankingElemento.textContent = "";
 
-    mensagemRankingElemento.classList.remove(
-        "mensagem-erro"
-    );
+        mensagemRankingElemento.classList.remove(
+            "mensagem-erro"
+        );
+    }
 
     if (equipes.length === 0) {
         rankingElemento.innerHTML = `
             <div class="ranking-vazio">
                 <span>🚧</span>
-
-                <p>
-                    Nenhuma equipe conectada.
-                </p>
+                <p>Nenhuma equipe conectada.</p>
             </div>
         `;
 
@@ -211,8 +223,16 @@ function renderizarRanking(equipes) {
             const posicao =
                 indice + 1;
 
+            const media =
+                equipe.participantes > 0
+                    ? equipe.pontos /
+                        equipe.participantes
+                    : 0;
+
             const item =
-                document.createElement("article");
+                document.createElement(
+                    "article"
+                );
 
             item.classList.add(
                 "ranking-equipe-item"
@@ -224,15 +244,9 @@ function renderizarRanking(equipes) {
                 );
             }
 
-            const media =
-                equipe.participantes > 0
-                    ? equipe.pontos /
-                        equipe.participantes
-                    : 0;
-
             item.innerHTML = `
                 <div class="ranking-posicao">
-                    ${obterMedalha(posicao)}
+                    ${obterPosicao(posicao)}
                 </div>
 
                 <div class="ranking-equipe-dados">
@@ -272,7 +286,11 @@ function renderizarRanking(equipes) {
     );
 }
 
-function obterMedalha(posicao) {
+/* =========================
+   FUNÇÕES AUXILIARES
+========================= */
+
+function obterPosicao(posicao) {
     const medalhas = {
         1: "🥇",
         2: "🥈",
@@ -298,7 +316,8 @@ function escaparHTML(texto) {
     const elemento =
         document.createElement("div");
 
-    elemento.textContent = texto;
+    elemento.textContent =
+        String(texto);
 
     return elemento.innerHTML;
 }
