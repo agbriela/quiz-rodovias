@@ -5,6 +5,20 @@ import {
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
+/* =========================
+   EQUIPES FIXAS
+========================= */
+
+const NOMES_EQUIPES = [
+    "Segurança Viária",
+    "Pista Dupla",
+    "Faixa Expressa"
+];
+
+/* =========================
+   ELEMENTOS DA PÁGINA
+========================= */
+
 const rankingElemento =
     document.getElementById("ranking");
 
@@ -20,6 +34,10 @@ const totalPontosElemento =
 const mensagemRankingElemento =
     document.getElementById("mensagemRanking");
 
+/* =========================
+   FIRESTORE EM TEMPO REAL
+========================= */
+
 onSnapshot(
     collection(db, "participantes"),
 
@@ -34,7 +52,9 @@ onSnapshot(
         });
 
         const equipes =
-            agruparPorEquipe(participantes);
+            calcularPontuacaoDasEquipes(
+                participantes
+            );
 
         atualizarResumo(
             participantes,
@@ -52,57 +72,51 @@ onSnapshot(
 
         rankingElemento.innerHTML = "";
 
-        if (mensagemRankingElemento) {
-            mensagemRankingElemento.textContent =
-                "Não foi possível carregar o ranking.";
+        mensagemRankingElemento.textContent =
+            "Não foi possível carregar o ranking.";
 
-            mensagemRankingElemento.classList.add(
-                "mensagem-erro"
-            );
-        }
+        mensagemRankingElemento.classList.add(
+            "mensagem-erro"
+        );
     }
 );
 
-function agruparPorEquipe(participantes) {
-    const mapaEquipes = new Map();
+/* =========================
+   SOMA DOS PONTOS POR EQUIPE
+========================= */
 
-    participantes.forEach(participante => {
-        const equipeOriginal =
-            String(
-                participante.equipe ??
-                "Sem equipe"
-            ).trim();
+function calcularPontuacaoDasEquipes(
+    participantes
+) {
+    const equipes = NOMES_EQUIPES.map(
+        nome => ({
+            nome,
+            pontos: 0
+        })
+    );
 
-        const chaveEquipe =
-            normalizarEquipe(equipeOriginal);
+    participantes.forEach(
+        participante => {
+            const equipe =
+                equipes.find(
+                    item =>
+                        item.nome ===
+                        participante.equipe
+                );
 
-        if (!mapaEquipes.has(chaveEquipe)) {
-            mapaEquipes.set(
-                chaveEquipe,
-                {
-                    nome:
-                        equipeOriginal ||
-                        "Sem equipe",
+            if (!equipe) {
+                return;
+            }
 
-                    pontos: 0,
-
-                    participantes: 0
-                }
-            );
+            equipe.pontos +=
+                Number(
+                    participante.pontos ?? 0
+                );
         }
+    );
 
-        const equipe =
-            mapaEquipes.get(chaveEquipe);
-
-        equipe.pontos +=
-            Number(participante.pontos) || 0;
-
-        equipe.participantes += 1;
-    });
-
-    return Array
-        .from(mapaEquipes.values())
-        .sort((equipeA, equipeB) => {
+    return equipes.sort(
+        (equipeA, equipeB) => {
             if (
                 equipeB.pontos !==
                 equipeA.pontos
@@ -113,43 +127,35 @@ function agruparPorEquipe(participantes) {
                 );
             }
 
-            return equipeA.nome.localeCompare(
-                equipeB.nome,
-                "pt-BR"
+            return (
+                NOMES_EQUIPES.indexOf(
+                    equipeA.nome
+                ) -
+                NOMES_EQUIPES.indexOf(
+                    equipeB.nome
+                )
             );
-        });
+        }
+    );
 }
 
-function normalizarEquipe(nome) {
-    return String(nome)
-        .trim()
-        .toLocaleLowerCase("pt-BR")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, " ");
-}
+/* =========================
+   RESUMO
+========================= */
 
 function atualizarResumo(
     participantes,
     equipes
 ) {
     const totalPontos =
-        participantes.reduce(
-            (total, participante) => {
-                return (
-                    total +
-                    (
-                        Number(
-                            participante.pontos
-                        ) || 0
-                    )
-                );
-            },
+        equipes.reduce(
+            (total, equipe) =>
+                total + equipe.pontos,
             0
         );
 
     quantidadeEquipesElemento.textContent =
-        equipes.length;
+        NOMES_EQUIPES.length;
 
     quantidadeParticipantesElemento.textContent =
         participantes.length;
@@ -158,27 +164,18 @@ function atualizarResumo(
         formatarNumero(totalPontos);
 }
 
+/* =========================
+   RENDERIZAR PÓDIO
+========================= */
+
 function renderizarRanking(equipes) {
     rankingElemento.innerHTML = "";
 
-    if (mensagemRankingElemento) {
-        mensagemRankingElemento.textContent = "";
+    mensagemRankingElemento.textContent = "";
 
-        mensagemRankingElemento.classList.remove(
-            "mensagem-erro"
-        );
-    }
-
-    if (equipes.length === 0) {
-        rankingElemento.innerHTML = `
-            <div class="ranking-vazio">
-                <span>🚧</span>
-                <p>Nenhuma equipe conectada.</p>
-            </div>
-        `;
-
-        return;
-    }
+    mensagemRankingElemento.classList.remove(
+        "mensagem-erro"
+    );
 
     equipes.forEach(
         (equipe, indice) => {
@@ -194,11 +191,9 @@ function renderizarRanking(equipes) {
                 "ranking-equipe-item"
             );
 
-            if (posicao <= 3) {
-                item.classList.add(
-                    `ranking-posicao-${posicao}`
-                );
-            }
+            item.classList.add(
+                `ranking-posicao-${posicao}`
+            );
 
             item.innerHTML = `
                 <div class="ranking-posicao">
@@ -207,7 +202,7 @@ function renderizarRanking(equipes) {
 
                 <div class="ranking-equipe-dados">
                     <strong>
-                        ${escaparHTML(equipe.nome)}
+                        ${equipe.nome}
                     </strong>
                 </div>
 
@@ -227,6 +222,10 @@ function renderizarRanking(equipes) {
     );
 }
 
+/* =========================
+   FUNÇÕES AUXILIARES
+========================= */
+
 function obterPosicao(posicao) {
     const medalhas = {
         1: "🥇",
@@ -234,10 +233,7 @@ function obterPosicao(posicao) {
         3: "🥉"
     };
 
-    return (
-        medalhas[posicao] ??
-        `${posicao}º`
-    );
+    return medalhas[posicao];
 }
 
 function formatarNumero(valor) {
@@ -247,14 +243,4 @@ function formatarNumero(valor) {
             maximumFractionDigits: 0
         }
     ).format(valor);
-}
-
-function escaparHTML(texto) {
-    const elemento =
-        document.createElement("div");
-
-    elemento.textContent =
-        String(texto);
-
-    return elemento.innerHTML;
 }
