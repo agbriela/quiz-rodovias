@@ -5,10 +5,6 @@ import {
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-/* =========================
-   ELEMENTOS DA PÁGINA
-========================= */
-
 const rankingElemento =
     document.getElementById("ranking");
 
@@ -23,10 +19,6 @@ const totalPontosElemento =
 
 const mensagemRankingElemento =
     document.getElementById("mensagemRanking");
-
-/* =========================
-   FIRESTORE EM TEMPO REAL
-========================= */
 
 onSnapshot(
     collection(db, "participantes"),
@@ -71,10 +63,6 @@ onSnapshot(
     }
 );
 
-/* =========================
-   AGRUPAMENTO DAS EQUIPES
-========================= */
-
 function agruparPorEquipe(participantes) {
     const mapaEquipes = new Map();
 
@@ -85,15 +73,6 @@ function agruparPorEquipe(participantes) {
                 "Sem equipe"
             ).trim();
 
-        /*
-         * Esta chave evita separar equipes por
-         * maiúsculas, minúsculas ou espaços.
-         *
-         * Exemplo:
-         * "Faixa Expressa"
-         * "faixa expressa"
-         * " FAIXA EXPRESSA "
-         */
         const chaveEquipe =
             normalizarEquipe(equipeOriginal);
 
@@ -161,10 +140,6 @@ function normalizarEquipe(nome) {
         .replace(/\s+/g, " ");
 }
 
-/* =========================
-   RESUMO
-========================= */
-
 function atualizarResumo(
     participantes,
     equipes
@@ -191,10 +166,6 @@ function atualizarResumo(
     totalPontosElemento.textContent =
         formatarNumero(totalPontos);
 }
-
-/* =========================
-   RENDERIZAR RANKING
-========================= */
 
 function renderizarRanking(equipes) {
     rankingElemento.innerHTML = "";
@@ -285,10 +256,6 @@ function renderizarRanking(equipes) {
         }
     );
 }
-
-/* =========================
-   FUNÇÕES AUXILIARES
-========================= */
 
 function obterPosicao(posicao) {
     const medalhas = {
