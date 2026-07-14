@@ -3,23 +3,82 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Ranking por Equipes</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
 
 <body>
 
-    <div class="container">
+    <main class="container ranking-container">
 
-        <h1>🏆 Ranking</h1>
+        <p class="painel-label">
+            Desafio Mestres da Rodovia
+        </p>
 
-        <div id="ranking"></div>
+        <h1>
+            🏆 Ranking por Equipes
+        </h1>
 
-    </div>
+        <p class="ranking-descricao">
+            A pontuação representa a soma dos pontos de todos os integrantes.
+        </p>
 
-    <script type="module" src="js/ranking.js"></script>
+        <section class="ranking-resumo">
+
+            <div class="status-card">
+                <span>Equipes</span>
+
+                <strong id="quantidadeEquipes">
+                    0
+                </strong>
+            </div>
+
+            <div class="status-card">
+                <span>Participantes</span>
+
+                <strong id="quantidadeParticipantes">
+                    0
+                </strong>
+            </div>
+
+            <div class="status-card">
+                <span>Pontos distribuídos</span>
+
+                <strong id="totalPontos">
+                    0
+                </strong>
+            </div>
+
+        </section>
+
+        <section
+            id="ranking"
+            class="ranking-equipes"
+        >
+            <p>Carregando ranking...</p>
+        </section>
+
+        <p
+            id="mensagemRanking"
+            class="mensagem-painel"
+        ></p>
+
+    </main>
+
+    <script
+        type="module"
+        src="js/ranking.js"
+    ></script>
 
 </body>
 
