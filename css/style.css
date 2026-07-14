@@ -1,27 +1,30 @@
-
 :root {
-    --color-primary: #12603C;
-    --color-primary-dark: #0B4429;
-    --color-accent: #7CB518;
+    --color-primary: #12603c;
+    --color-primary-dark: #0b4429;
+    --color-accent: #7cb518;
 
-    --color-bg-1: #071F13;
-    --color-bg-2: #0B4429;
-    --color-bg-3: #12603C;
+    --color-bg-1: #071f13;
+    --color-bg-2: #0b4429;
+    --color-bg-3: #12603c;
 
-    --color-text: #FFFFFF;
-    --color-text-muted: #D5E8DD;
+    --color-text: #ffffff;
+    --color-text-muted: #d5e8dd;
 
     --color-card: rgba(11, 68, 41, 0.88);
     --color-card-light: rgba(18, 96, 60, 0.72);
 
-    --color-success: #7CB518;
-    --color-info: #2E8B57;
+    --color-success: #7cb518;
+    --color-info: #2e8b57;
 
-    --color-danger: #B42318;
-    --color-danger-hover: #D92D20;
+    --color-danger: #b42318;
+    --color-danger-hover: #d92d20;
 
     --color-border: rgba(255, 255, 255, 0.12);
     --color-shadow: rgba(0, 0, 0, 0.4);
+
+    --color-gold: #ffd700;
+    --color-silver: #c0c0c0;
+    --color-bronze: #cd7f32;
 }
 
 * {
@@ -111,7 +114,7 @@ select {
     padding: 18px;
     margin-bottom: 20px;
 
-    background: #FFFFFF;
+    background: #ffffff;
     color: #222222;
 
     border: 2px solid transparent;
@@ -202,6 +205,7 @@ button:disabled:hover {
 .area-quiz {
     width: 100%;
 }
+
 .progress {
     width: 100%;
     height: 14px;
@@ -225,7 +229,7 @@ button:disabled:hover {
     background: linear-gradient(
         90deg,
         var(--color-accent),
-        #A4D233
+        #a4d233
     );
 
     border-radius: 20px;
@@ -311,7 +315,7 @@ button:disabled:hover {
 .alternativa-correta:disabled {
     background: var(--color-accent);
 
-    border-color: #FFFFFF;
+    border-color: #ffffff;
 
     opacity: 1;
 }
@@ -320,7 +324,7 @@ button:disabled:hover {
 .alternativa-incorreta:disabled {
     background: var(--color-danger);
 
-    border-color: #FFB4AB;
+    border-color: #ffb4ab;
 
     opacity: 1;
 }
@@ -387,7 +391,6 @@ button:disabled:hover {
     color: var(--color-text-muted);
 
     font-size: 14px;
-
     text-transform: uppercase;
 }
 
@@ -631,7 +634,178 @@ button:disabled:hover {
 }
 
 .mensagem-erro {
-    color: #FFB4AB;
+    color: #ffb4ab;
+}
+
+.ranking-container {
+    max-width: 900px;
+}
+
+.ranking-descricao {
+    margin-top: -15px;
+    margin-bottom: 30px;
+
+    color: var(--color-text-muted);
+}
+
+.ranking-resumo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+.ranking-equipes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.ranking-equipe-item {
+    display: grid;
+    grid-template-columns: 75px 1fr 150px;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px;
+
+    background: var(--color-primary-dark);
+
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.2);
+
+    transition:
+        background 0.3s,
+        border-color 0.3s,
+        transform 0.3s,
+        box-shadow 0.3s;
+}
+
+.ranking-equipe-item:hover {
+    background: var(--color-primary);
+
+    border-color: var(--color-accent);
+
+    transform: translateY(-3px);
+}
+
+.ranking-posicao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 55px;
+    min-height: 55px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border-radius: 50%;
+
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.ranking-equipe-dados {
+    text-align: left;
+}
+
+.ranking-equipe-dados strong {
+    font-size: 23px;
+    line-height: 1.3;
+}
+
+.ranking-equipe-pontos {
+    min-width: 130px;
+
+    text-align: right;
+}
+
+.ranking-equipe-pontos strong {
+    display: block;
+
+    color: var(--color-accent);
+
+    font-size: 30px;
+}
+
+.ranking-equipe-pontos span {
+    color: var(--color-text-muted);
+
+    font-size: 14px;
+}
+
+.ranking-posicao-1 {
+    border: 2px solid var(--color-gold);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 215, 0, 0.13),
+            var(--color-primary-dark)
+        );
+
+    box-shadow:
+        0 0 24px rgba(255, 215, 0, 0.2);
+}
+
+.ranking-posicao-1 .ranking-posicao {
+    background: rgba(255, 215, 0, 0.16);
+}
+
+.ranking-posicao-2 {
+    border: 2px solid var(--color-silver);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(192, 192, 192, 0.12),
+            var(--color-primary-dark)
+        );
+}
+
+.ranking-posicao-2 .ranking-posicao {
+    background: rgba(192, 192, 192, 0.14);
+}
+
+.ranking-posicao-3 {
+    border: 2px solid var(--color-bronze);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(205, 127, 50, 0.12),
+            var(--color-primary-dark)
+        );
+}
+
+.ranking-posicao-3 .ranking-posicao {
+    background: rgba(205, 127, 50, 0.14);
+}
+
+.ranking-vazio {
+    padding: 40px;
+
+    background: var(--color-primary-dark);
+
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+
+    color: var(--color-text-muted);
+}
+
+.ranking-vazio span {
+    display: block;
+
+    margin-bottom: 15px;
+
+    font-size: 45px;
 }
 
 @media (max-width: 768px) {
@@ -675,7 +849,8 @@ button:disabled:hover {
 
     .status-jogo,
     .alternativas-apresentador,
-    .controles-apresentador {
+    .controles-apresentador,
+    .ranking-resumo {
         grid-template-columns: 1fr;
     }
 
@@ -703,6 +878,28 @@ button:disabled:hover {
         height: 90px;
 
         font-size: 42px;
+    }
+
+    .ranking-equipe-item {
+        grid-template-columns: 60px 1fr;
+
+        gap: 15px;
+    }
+
+    .ranking-equipe-pontos {
+        grid-column: 1 / -1;
+
+        width: 100%;
+        min-width: 0;
+        padding-top: 14px;
+
+        border-top: 1px solid var(--color-border);
+
+        text-align: center;
+    }
+
+    .ranking-equipe-pontos strong {
+        font-size: 27px;
     }
 }
 
@@ -749,5 +946,27 @@ button:disabled:hover {
 
     .sala-espera {
         min-height: 380px;
+    }
+
+    .ranking-equipe-item {
+        grid-template-columns: 50px 1fr;
+
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .ranking-posicao {
+        min-width: 46px;
+        min-height: 46px;
+
+        font-size: 22px;
+    }
+
+    .ranking-equipe-dados strong {
+        font-size: 18px;
+    }
+
+    .ranking-equipe-pontos strong {
+        font-size: 24px;
     }
 }
