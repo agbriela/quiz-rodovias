@@ -86,9 +86,7 @@ function agruparPorEquipe(participantes) {
 
                     pontos: 0,
 
-                    participantes: 0,
-
-                    integrantes: []
+                    participantes: 0
                 }
             );
         }
@@ -96,19 +94,10 @@ function agruparPorEquipe(participantes) {
         const equipe =
             mapaEquipes.get(chaveEquipe);
 
-        const pontos =
+        equipe.pontos +=
             Number(participante.pontos) || 0;
 
-        equipe.pontos += pontos;
         equipe.participantes += 1;
-
-        equipe.integrantes.push({
-            nome:
-                participante.nome ??
-                "Participante",
-
-            pontos
-        });
     });
 
     return Array
@@ -149,9 +138,11 @@ function atualizarResumo(
             (total, participante) => {
                 return (
                     total +
-                    (Number(
-                        participante.pontos
-                    ) || 0)
+                    (
+                        Number(
+                            participante.pontos
+                        ) || 0
+                    )
                 );
             },
             0
@@ -194,12 +185,6 @@ function renderizarRanking(equipes) {
             const posicao =
                 indice + 1;
 
-            const media =
-                equipe.participantes > 0
-                    ? equipe.pontos /
-                        equipe.participantes
-                    : 0;
-
             const item =
                 document.createElement(
                     "article"
@@ -224,21 +209,6 @@ function renderizarRanking(equipes) {
                     <strong>
                         ${escaparHTML(equipe.nome)}
                     </strong>
-
-                    <span>
-                        ${equipe.participantes}
-                        ${
-                            equipe.participantes === 1
-                                ? "participante"
-                                : "participantes"
-                        }
-                    </span>
-
-                    <small>
-                        Média:
-                        ${formatarNumero(media)}
-                        pontos por participante
-                    </small>
                 </div>
 
                 <div class="ranking-equipe-pontos">
