@@ -9,11 +9,6 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="Quiz Desafio Mestres da Rodovia"
-    >
-
     <title>Desafio Mestres da Rodovia</title>
 
     <link
@@ -24,47 +19,92 @@
 
 <body>
 
-    <main class="container">
+    <main class="container participante-container">
 
-        <p class="painel-label">
-            Desafio Mestres da Rodovia
-        </p>
-
-        <h1>
-            Quiz Ciclo de Vida do CAPEX
-        </h1>
-
-        <div class="progress">
-            <div
-                class="progress-bar"
-                id="barra"
-            ></div>
-        </div>
-
-        <section id="quiz">
-
-            <h2 id="pergunta">
-                Aguardando o início da pergunta...
-            </h2>
-
-            <div
-                id="timer"
-                aria-label="Tempo restante"
-            >
-                20
+        <!-- SALA DE ESPERA -->
+        <section
+            id="salaEspera"
+            class="sala-espera"
+        >
+            <div class="icone-espera">
+                🚧
             </div>
 
-            <div
-                id="alternativas"
-                aria-label="Alternativas da pergunta"
-            ></div>
+            <p class="painel-label">
+                Sala de espera
+            </p>
 
+            <h1>
+                Desafio Mestres da Rodovia
+            </h1>
+
+            <p class="texto-espera">
+                Você já está conectado ao jogo.
+            </p>
+
+            <div class="participante-logado">
+                <span>Participante</span>
+
+                <strong id="nomeParticipante">
+                    Carregando...
+                </strong>
+
+                <small id="equipeParticipante"></small>
+            </div>
+
+            <div class="animacao-espera">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <p class="mensagem-espera">
+                Aguarde o apresentador iniciar o quiz.
+            </p>
         </section>
 
-        <p
-            id="mensagemParticipante"
-            class="mensagem-painel"
-        ></p>
+        <!-- QUIZ -->
+        <section
+            id="areaQuiz"
+            class="area-quiz oculto"
+        >
+            <p class="painel-label">
+                Desafio Mestres da Rodovia
+            </p>
+
+            <h1>
+                🚦 Quiz Rodoviário
+            </h1>
+
+            <div class="progress">
+                <div
+                    class="progress-bar"
+                    id="barra"
+                ></div>
+            </div>
+
+            <div id="quiz">
+
+                <h2 id="pergunta">
+                    Preparando pergunta...
+                </h2>
+
+                <div
+                    id="timer"
+                    aria-label="Tempo restante"
+                >
+                    20
+                </div>
+
+                <div id="alternativas"></div>
+
+            </div>
+
+            <p
+                id="mensagemParticipante"
+                class="mensagem-painel"
+            ></p>
+        </section>
 
     </main>
 
