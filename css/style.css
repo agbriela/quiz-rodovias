@@ -1,3 +1,4 @@
+
 :root {
     --color-primary: #12603C;
     --color-primary-dark: #0B4429;
@@ -15,6 +16,7 @@
 
     --color-success: #7CB518;
     --color-info: #2E8B57;
+
     --color-danger: #B42318;
     --color-danger-hover: #D92D20;
 
@@ -28,8 +30,14 @@
     box-sizing: border-box;
 }
 
-
 body {
+    min-height: 100vh;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     font-family: Arial, Helvetica, sans-serif;
 
     background:
@@ -46,13 +54,6 @@ body {
         );
 
     color: var(--color-text);
-    min-height: 100vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
 }
 
 .container {
@@ -76,14 +77,32 @@ body {
 
 h1 {
     margin-bottom: 30px;
+
     font-size: 2rem;
     line-height: 1.2;
 }
 
 h2 {
     margin-bottom: 30px;
+
     font-size: 1.8rem;
     line-height: 1.4;
+}
+
+p {
+    line-height: 1.5;
+}
+
+.painel-label {
+    margin-bottom: 10px;
+
+    color: var(--color-accent);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 input,
@@ -92,13 +111,13 @@ select {
     padding: 18px;
     margin-bottom: 20px;
 
+    background: #FFFFFF;
+    color: #222222;
+
     border: 2px solid transparent;
     border-radius: 12px;
 
     font-size: 18px;
-
-    background: #ffffff;
-    color: #222222;
 
     transition:
         border-color 0.3s,
@@ -120,11 +139,11 @@ button {
     padding: 18px;
 
     background: var(--color-primary);
+    color: var(--color-text);
 
     border: none;
     border-radius: 12px;
 
-    color: var(--color-text);
     font-size: 18px;
     font-weight: bold;
 
@@ -162,16 +181,27 @@ button:disabled {
 
 button:disabled:hover {
     background: var(--color-primary);
+
     transform: none;
+
     box-shadow: none;
 }
 
+.oculto {
+    display: none !important;
+}
 
 #quiz {
     margin-top: 20px;
 }
 
+.participante-container {
+    max-width: 700px;
+}
 
+.area-quiz {
+    width: 100%;
+}
 .progress {
     width: 100%;
     height: 14px;
@@ -203,22 +233,21 @@ button:disabled:hover {
     transition: width 0.4s ease;
 }
 
-
 #timer {
     width: 120px;
     height: 120px;
 
     margin: 30px auto;
 
-    border: 4px solid rgba(255, 255, 255, 0.16);
-    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     background: var(--color-accent);
     color: var(--color-text);
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 4px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
 
     font-size: 50px;
     font-weight: bold;
@@ -226,7 +255,6 @@ button:disabled:hover {
     box-shadow:
         0 0 30px rgba(124, 181, 24, 0.5);
 }
-
 
 .alternativa {
     display: block;
@@ -271,11 +299,160 @@ button:disabled:hover {
 
 .alternativa:disabled:hover {
     background: var(--color-primary-dark);
+
     border-color: transparent;
+
     transform: none;
+
     box-shadow: none;
 }
 
+.alternativa-correta,
+.alternativa-correta:disabled {
+    background: var(--color-accent);
+
+    border-color: #FFFFFF;
+
+    opacity: 1;
+}
+
+.alternativa-incorreta,
+.alternativa-incorreta:disabled {
+    background: var(--color-danger);
+
+    border-color: #FFB4AB;
+
+    opacity: 1;
+}
+
+.sala-espera {
+    min-height: 480px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icone-espera {
+    width: 110px;
+    height: 110px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: var(--color-primary-dark);
+
+    border: 3px solid var(--color-accent);
+    border-radius: 50%;
+
+    font-size: 50px;
+
+    box-shadow:
+        0 0 35px rgba(124, 181, 24, 0.35);
+}
+
+.texto-espera {
+    margin-bottom: 25px;
+
+    color: var(--color-text-muted);
+
+    font-size: 18px;
+}
+
+.participante-logado {
+    width: 100%;
+    max-width: 420px;
+
+    margin-bottom: 25px;
+    padding: 20px;
+
+    background: var(--color-primary-dark);
+
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.participante-logado span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--color-text-muted);
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+}
+
+.participante-logado strong {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 23px;
+}
+
+.participante-logado small {
+    color: var(--color-accent);
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.mensagem-espera {
+    color: var(--color-text-muted);
+
+    font-size: 16px;
+}
+
+.animacao-espera {
+    display: flex;
+
+    gap: 9px;
+
+    margin-bottom: 20px;
+}
+
+.animacao-espera span {
+    width: 12px;
+    height: 12px;
+
+    background: var(--color-accent);
+
+    border-radius: 50%;
+
+    animation:
+        pulsarEspera 1.2s infinite ease-in-out;
+}
+
+.animacao-espera span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.animacao-espera span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes pulsarEspera {
+    0%,
+    80%,
+    100% {
+        opacity: 0.35;
+        transform: scale(0.8);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
 
 .ranking-item {
     display: flex;
@@ -299,26 +476,13 @@ button:disabled:hover {
 
 .ranking-item:hover {
     background: var(--color-primary);
+
     transform: translateY(-2px);
 }
-
 
 .apresentador-container {
     max-width: 950px;
 }
-
-.painel-label {
-    margin-bottom: 10px;
-
-    color: var(--color-accent);
-
-    font-size: 14px;
-    font-weight: bold;
-
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
 
 .status-jogo {
     display: grid;
@@ -347,6 +511,7 @@ button:disabled:hover {
 
 .status-card:hover {
     background: var(--color-primary);
+
     transform: translateY(-3px);
 }
 
@@ -367,7 +532,6 @@ button:disabled:hover {
 
     font-size: 24px;
 }
-
 
 .pergunta-apresentador {
     min-height: 260px;
@@ -399,11 +563,10 @@ button:disabled:hover {
     padding: 16px;
 
     background: var(--color-primary-dark);
+    color: var(--color-text);
 
     border: 1px solid var(--color-border);
     border-radius: 12px;
-
-    color: var(--color-text);
 
     font-weight: bold;
     line-height: 1.4;
@@ -422,7 +585,6 @@ button:disabled:hover {
 
     transform: translateY(-2px);
 }
-
 
 .controles-apresentador {
     display: grid;
@@ -458,7 +620,6 @@ button:disabled:hover {
         0 8px 20px rgba(217, 45, 32, 0.3);
 }
 
-
 .mensagem-painel {
     min-height: 24px;
 
@@ -476,12 +637,15 @@ button:disabled:hover {
 @media (max-width: 768px) {
     body {
         align-items: flex-start;
+
         padding: 15px;
     }
 
     .container {
         width: 100%;
+
         padding: 25px;
+
         border-radius: 20px;
     }
 
@@ -505,6 +669,7 @@ button:disabled:hover {
     select,
     .alternativa {
         padding: 15px;
+
         font-size: 16px;
     }
 
@@ -520,6 +685,7 @@ button:disabled:hover {
 
     .pergunta-apresentador {
         min-height: auto;
+
         padding: 20px;
     }
 
@@ -527,8 +693,18 @@ button:disabled:hover {
         align-items: flex-start;
         flex-direction: column;
     }
-}
 
+    .sala-espera {
+        min-height: 420px;
+    }
+
+    .icone-espera {
+        width: 90px;
+        height: 90px;
+
+        font-size: 42px;
+    }
+}
 
 @media (max-width: 420px) {
     body {
@@ -559,6 +735,19 @@ button:disabled:hover {
     .alternativa,
     .alternativa-apresentador {
         padding: 14px;
+
         font-size: 15px;
+    }
+
+    .participante-logado {
+        padding: 16px;
+    }
+
+    .participante-logado strong {
+        font-size: 20px;
+    }
+
+    .sala-espera {
+        min-height: 380px;
     }
 }
