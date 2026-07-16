@@ -970,3 +970,171 @@ button:disabled:hover {
         font-size: 24px;
     }
 }
+/* ======================================================
+   ABAS DO RANKING
+====================================================== */
+
+.ranking-abas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.ranking-aba {
+    background: var(--color-primary-dark);
+
+    border: 2px solid transparent;
+
+    transition:
+        background 0.3s,
+        border-color 0.3s,
+        transform 0.3s;
+}
+
+.ranking-aba:hover {
+    background: var(--color-primary);
+    border-color: var(--color-accent);
+}
+
+.ranking-aba.ativa {
+    background: var(--color-accent);
+    color: #ffffff;
+
+    border-color: #ffffff;
+
+    box-shadow:
+        0 8px 18px rgba(124, 181, 24, 0.35);
+}
+
+/* ======================================================
+   RANKING INDIVIDUAL
+====================================================== */
+
+.ranking-pessoas {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.ranking-pessoa-item {
+    display: grid;
+    grid-template-columns: 75px 1fr 150px;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px;
+
+    background: var(--color-primary-dark);
+
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.2);
+
+    transition:
+        background 0.3s,
+        transform 0.3s,
+        border-color 0.3s;
+}
+
+.ranking-pessoa-item:hover {
+    background: var(--color-primary);
+
+    border-color: var(--color-accent);
+
+    transform: translateY(-3px);
+}
+
+.ranking-pessoa-dados {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    text-align: left;
+}
+
+.ranking-pessoa-dados strong {
+    font-size: 22px;
+}
+
+.ranking-pessoa-dados span {
+    color: var(--color-text-muted);
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.ranking-pessoa-pontos {
+    text-align: right;
+}
+
+.ranking-pessoa-pontos strong {
+    display: block;
+
+    color: var(--color-accent);
+
+    font-size: 30px;
+}
+
+.ranking-pessoa-pontos span {
+    color: var(--color-text-muted);
+
+    font-size: 14px;
+}
+
+/* ======================================================
+   RESPONSIVO DO RANKING INDIVIDUAL
+====================================================== */
+
+@media (max-width: 768px) {
+    .ranking-abas {
+        grid-template-columns: 1fr;
+    }
+
+    .ranking-pessoa-item {
+        grid-template-columns: 60px 1fr;
+
+        gap: 15px;
+    }
+
+    .ranking-pessoa-pontos {
+        grid-column: 1 / -1;
+
+        width: 100%;
+
+        margin-top: 12px;
+        padding-top: 12px;
+
+        border-top: 1px solid var(--color-border);
+
+        text-align: center;
+    }
+
+    .ranking-pessoa-pontos strong {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 420px) {
+    .ranking-pessoa-item {
+        grid-template-columns: 50px 1fr;
+
+        gap: 12px;
+
+        padding: 16px;
+    }
+
+    .ranking-pessoa-dados strong {
+        font-size: 18px;
+    }
+
+    .ranking-pessoa-pontos strong {
+        font-size: 24px;
+    }
+}
