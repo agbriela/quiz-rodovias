@@ -35,9 +35,6 @@ const quantidadeEquipesElemento =
 const quantidadeParticipantesElemento =
     document.getElementById("quantidadeParticipantes");
 
-const totalPontosElemento =
-    document.getElementById("totalPontos");
-
 const mensagemRankingElemento =
     document.getElementById("mensagemRanking");
 
@@ -50,11 +47,8 @@ const botaoPessoas =
 const rankingDescricao =
     document.getElementById("rankingDescricao");
 
-const rotuloQuantidade =
-    document.getElementById("rotuloQuantidade");
-
 /* =========================
-   EVENTOS DAS ABAS
+   EVENTOS
 ========================= */
 
 botaoEquipes.addEventListener(
@@ -74,7 +68,7 @@ botaoPessoas.addEventListener(
 );
 
 /* =========================
-   FIRESTORE
+   FIRESTORE EM TEMPO REAL
 ========================= */
 
 onSnapshot(
@@ -90,7 +84,7 @@ onSnapshot(
             });
         });
 
-        atualizarResumoGeral();
+        atualizarResumo();
         atualizarVisualizacao();
     },
 
@@ -112,39 +106,43 @@ onSnapshot(
 );
 
 /* =========================
-   ATUALIZAR VISUALIZAÇÃO
+   RESUMO FIXO
+========================= */
+
+function atualizarResumo() {
+    quantidadeEquipesElemento.textContent =
+        NOMES_EQUIPES.length;
+
+    quantidadeParticipantesElemento.textContent =
+        participantes.length;
+}
+
+/* =========================
+   TROCA DE VISUALIZAÇÃO
 ========================= */
 
 function atualizarVisualizacao() {
-    limparMensagemErro();
+    limparMensagem();
 
     if (visualizacaoAtual === "equipes") {
-        mostrarRankingEquipes();
+        renderizarRankingEquipes();
     } else {
-        mostrarRankingPessoas();
+        renderizarRankingIndividual();
     }
 
-    atualizarEstadoDasAbas();
+    atualizarAbas();
 }
 
 /* =========================
    RANKING POR EQUIPES
 ========================= */
 
-function mostrarRankingEquipes() {
+function renderizarRankingEquipes() {
     const equipes =
-        calcularPontuacaoDasEquipes(
-            participantes
-        );
+        calcularPontuacaoDasEquipes();
 
     rankingDescricao.textContent =
         "A pontuação representa a soma dos pontos de todos os integrantes.";
-
-    rotuloQuantidade.textContent =
-        "Equipes";
-
-    quantidadeEquipesElemento.textContent =
-        NOMES_EQUIPES.length;
 
     rankingElemento.className =
         "ranking-equipes";
@@ -157,9 +155,7 @@ function mostrarRankingEquipes() {
                 indice + 1;
 
             const item =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             item.classList.add(
                 "ranking-equipe-item",
@@ -186,16 +182,12 @@ function mostrarRankingEquipes() {
                 </div>
             `;
 
-            rankingElemento.appendChild(
-                item
-            );
+            rankingElemento.appendChild(item);
         }
     );
 }
 
-function calcularPontuacaoDasEquipes(
-    listaParticipantes
-) {
+function calcularPontuacaoDasEquipes() {
     const equipes =
         NOMES_EQUIPES.map(
             nome => ({
@@ -204,22 +196,22 @@ function calcularPontuacaoDasEquipes(
             })
         );
 
-    listaParticipantes.forEach(
+    participantes.forEach(
         participante => {
-            const equipe =
+            const equipeEncontrada =
                 equipes.find(
-                    item =>
-                        item.nome ===
+                    equipe =>
+                        equipe.nome ===
                         participante.equipe
                 );
 
-            if (!equipe) {
+            if (!equipeEncontrada) {
                 return;
             }
 
-            equipe.pontos +=
-                Number(
-                    participante.pontos ?? 0
+            equipeEncontrada.pontos +=
+                obterPontosParticipante(
+                    participante
                 );
         }
     );
@@ -252,18 +244,18 @@ function calcularPontuacaoDasEquipes(
    RANKING INDIVIDUAL
 ========================= */
 
-function mostrarRankingPessoas() {
+function renderizarRankingIndividual() {
     const pessoas =
         [...participantes].sort(
             (pessoaA, pessoaB) => {
                 const pontosA =
-                    Number(
-                        pessoaA.pontos ?? 0
+                    obterPontosParticipante(
+                        pessoaA
                     );
 
                 const pontosB =
-                    Number(
-                        pessoaB.pontos ?? 0
+                    obterPontosParticipante(
+                        pessoaB
                     );
 
                 if (pontosB !== pontosA) {
@@ -282,13 +274,7 @@ function mostrarRankingPessoas() {
         );
 
     rankingDescricao.textContent =
-        "A classificação individual considera a pontuação total de cada participante.";
-
-    rotuloQuantidade.textContent =
-        "Pessoas";
-
-    quantidadeEquipesElemento.textContent =
-        pessoas.length;
+        "A classificação considera a pontuação individual de cada participante.";
 
     rankingElemento.className =
         "ranking-pessoas";
@@ -299,7 +285,10 @@ function mostrarRankingPessoas() {
         rankingElemento.innerHTML = `
             <div class="ranking-vazio">
                 <span>🚧</span>
-                <p>Nenhum participante conectado.</p>
+
+                <p>
+                    Nenhum participante conectado.
+                </p>
             </div>
         `;
 
@@ -311,10 +300,13 @@ function mostrarRankingPessoas() {
             const posicao =
                 indice + 1;
 
-            const item =
-                document.createElement(
-                    "article"
+            const pontos =
+                obterPontosParticipante(
+                    pessoa
                 );
+
+            const item =
+                document.createElement("article");
 
             item.classList.add(
                 "ranking-pessoa-item"
@@ -349,65 +341,55 @@ function mostrarRankingPessoas() {
 
                 <div class="ranking-pessoa-pontos">
                     <strong>
-                        ${formatarNumero(
-                            Number(
-                                pessoa.pontos ?? 0
-                            )
-                        )}
+                        ${formatarNumero(pontos)}
                     </strong>
 
                     <span>pontos</span>
                 </div>
             `;
 
-            rankingElemento.appendChild(
-                item
-            );
+            rankingElemento.appendChild(item);
         }
     );
 }
 
 /* =========================
-   RESUMO
+   LEITURA DOS PONTOS
 ========================= */
 
-function atualizarResumoGeral() {
-    const totalPontos =
-        participantes.reduce(
-            (total, participante) => {
-                return (
-                    total +
-                    Number(
-                        participante.pontos ?? 0
-                    )
-                );
-            },
-            0
+function obterPontosParticipante(
+    participante
+) {
+    /*
+     * O campo criado pelo participante.js
+     * é chamado "pontos".
+     */
+    const pontos =
+        Number(
+            participante.pontos ?? 0
         );
 
-    quantidadeParticipantesElemento.textContent =
-        participantes.length;
-
-    totalPontosElemento.textContent =
-        formatarNumero(totalPontos);
+    return Number.isFinite(pontos)
+        ? pontos
+        : 0;
 }
 
 /* =========================
    ABAS
 ========================= */
 
-function atualizarEstadoDasAbas() {
-    const equipesAtivo =
+function atualizarAbas() {
+    const equipesAtiva =
         visualizacaoAtual === "equipes";
 
     botaoEquipes.classList.toggle(
         "ativa",
-        equipesAtivo
+        equipesAtiva
     );
 
     botaoPessoas.classList.toggle(
         "ativa",
-        !equipesAtivo
+        !equipesAtiva
     );
 }
 
@@ -447,7 +429,7 @@ function escaparHTML(texto) {
     return elemento.innerHTML;
 }
 
-function limparMensagemErro() {
+function limparMensagem() {
     mensagemRankingElemento.textContent = "";
 
     mensagemRankingElemento.classList.remove(
