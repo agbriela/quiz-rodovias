@@ -974,38 +974,39 @@ button:disabled:hover {
    ABAS DO RANKING
 ====================================================== */
 
-.ranking-abas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-
-    margin-bottom: 25px;
+.ranking-abas{
+    display:flex;
+    gap:15px;
+    margin:25px 0;
 }
 
-.ranking-aba {
-    background: var(--color-primary-dark);
+.ranking-aba{
+    flex:1;
 
-    border: 2px solid transparent;
+    width:auto;
+    margin:0;
 
-    transition:
-        background 0.3s,
-        border-color 0.3s,
-        transform 0.3s;
+    padding:14px 20px;
+
+    background:var(--color-primary-dark);
+
+    border:2px solid transparent;
+    border-radius:12px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    transition:.3s;
 }
 
-.ranking-aba:hover {
-    background: var(--color-primary);
-    border-color: var(--color-accent);
+.ranking-aba:hover{
+    background:var(--color-primary);
+    border-color:var(--color-accent);
 }
 
-.ranking-aba.ativa {
-    background: var(--color-accent);
-    color: #ffffff;
-
-    border-color: #ffffff;
-
-    box-shadow:
-        0 8px 18px rgba(124, 181, 24, 0.35);
+.ranking-aba.ativa{
+    background:var(--color-accent);
+    border-color:white;
 }
 
 /* ======================================================
