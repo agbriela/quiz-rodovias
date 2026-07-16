@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Ranking por Equipes</title>
+    <title>Ranking</title>
 
     <link
         rel="stylesheet"
@@ -26,17 +26,42 @@
         </p>
 
         <h1>
-            🏆 Ranking por Equipes
+            🏆 Ranking
         </h1>
 
-        <p class="ranking-descricao">
+        <div class="ranking-abas">
+
+            <button
+                type="button"
+                id="botaoEquipes"
+                class="ranking-aba ativa"
+            >
+                Ranking por equipes
+            </button>
+
+            <button
+                type="button"
+                id="botaoPessoas"
+                class="ranking-aba"
+            >
+                Ranking individual
+            </button>
+
+        </div>
+
+        <p
+            id="rankingDescricao"
+            class="ranking-descricao"
+        >
             A pontuação representa a soma dos pontos de todos os integrantes.
         </p>
 
         <section class="ranking-resumo">
 
             <div class="status-card">
-                <span>Equipes</span>
+                <span id="rotuloQuantidade">
+                    Equipes
+                </span>
 
                 <strong id="quantidadeEquipes">
                     0
@@ -75,10 +100,10 @@
 
     </main>
 
-   <script
-    type="module"
-    src="js/ranking.js?v=4"
-></script>
+    <script
+        type="module"
+        src="js/ranking.js?v=5"
+    ></script>
 
 </body>
 
