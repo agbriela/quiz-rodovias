@@ -3,10 +3,10 @@
     "id": 1,
     "pergunta": "O que o MP1 (Viabilidade) entrega ao final do seu ciclo?",
     "alternativas": [
-      "O orçamento executivo detalhado da obra",
+      "O orçamento executivo e o planejamento detalhado da olbra",
       "O CAPEX do Plano de Negócios, o Termo de Abertura e a declaração de escopo",
       "O boletim de medição do avanço físico",
-      "O custo real apurado no SAP"
+      "O cronograma executivo, medições e contratos assinados"
     ],
     "correta": 1
   },
@@ -15,9 +15,9 @@
     "pergunta": "Qual é o papel do Cost Control no MP1?",
     "alternativas": [
       "Aprovar o leilão e decidir o Go/No-Go",
-      "Executar o projeto de engenharia",
-      "Fazer a avaliação independente das estimativas iniciais e o benchmark de custos",
-      "Emitir a nota fiscal do investimento"
+      "Elaborar o projeto de engenhariae definr as soluções técnicas",
+      "Realizar uma avaliação independente das estimativas iniciais e o benchmark de custos",
+      "Consolidar as medições e emitir a nota fiscal do investimento"
     ],
     "correta": 2
   },
@@ -36,7 +36,7 @@
     "id": 4,
     "pergunta": "O que caracteriza o amadurecimento do orçamento no MP2?",
     "alternativas": [
-      "É definido de uma só vez, no início do projeto",
+      "Permanece praticamente inalterado desde o MP1",
       "Evolui por Stages, do funcional ao executivo",
       "Só é feito após o término da obra",
       "É substituído pelo custo real a cada mês"
@@ -47,21 +47,21 @@
     "id": 5,
     "pergunta": "No MP2, ao 'ratificar' a maturidade do orçamento, o Cost Control:",
     "alternativas": [
-      "Aprova formalmente a passagem de Gate",
-      "Substitui a engenharia na elaboração das PQ",
+      "Aprova formalmente a passagem do projeto pelo Gate",
+      "Assume a responsabilidade pela elaboração do orçamento executivo",
       "Emite um parecer técnico independente de maturidade — ratificar não é aprovar",
       "Define o cronograma de execução da obra"
     ],
-    "correta": 3
+    "correta": 2
   },
   {
     "id": 6,
     "pergunta": "Como o MP2 define a contingência do orçamento?",
     "alternativas": [
-      "Por um percentual fixo aplicado a todo projeto",
+      "Aplicando um percentual padrão a todos os projetos",
       "A partir da análise integrada de riscos (P80)",
       "Pela média dos contratos já assinados",
-      "Pelo valor do custo real do mês anterior"
+      "Com base na diferença entre o custo previsto e o custo realizado do mês anterior"
     ],
     "correta": 1
   }
