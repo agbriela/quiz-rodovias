@@ -1,24 +1,68 @@
 [
   {
     "id": 1,
-    "pergunta": "A partir de qual análise se determina a contingência do projeto no MP2?",
+    "pergunta": "O que o MP1 (Viabilidade) entrega ao final do seu ciclo?",
     "alternativas": [
-      "Da análise quantitativa de riscos, que determina a contingência (P80) registrada para monitoramento e controle.",
-      "O Plano de Negócios (Orçamento de Referência), estruturado em EAP e cadastrado no sistema",
-      "Emitir parecer independente de maturidade (aprovado / com ressalvas / reprovado). É insumo obrigatório para a deliberação — não substitui a decisão do fórum.",
-      "A GDN / Desenvolvimento de Novos Negócios, com apoio de consultorias e projetistas e articulação com a GCI-CPL"
+      "O orçamento executivo detalhado da obra",
+      "O CAPEX do Plano de Negócios, o Termo de Abertura e a declaração de escopo",
+      "O boletim de medição do avanço físico",
+      "O custo real apurado no SAP"
+    ],
+    "correta": 1
+  },
+  {
+    "id": 2,
+    "pergunta": "Qual é o papel do Cost Control no MP1?",
+    "alternativas": [
+      "Aprovar o leilão e decidir o Go/No-Go",
+      "Executar o projeto de engenharia",
+      "Fazer a avaliação independente das estimativas iniciais e o benchmark de custos",
+      "Emitir a nota fiscal do investimento"
+    ],
+    "correta": 2
+  },
+  {
+    "id": 3,
+    "pergunta": "Para estimar o CAPEX inicial, o MP1 se apoia principalmente em:",
+    "alternativas": [
+      "Banco de dados de custos, lições aprendidas e estudos de engenharia",
+      "Apenas na intuição do gestor do projeto",
+      "No custo real de obras já em execução no mês",
+      "Nas medições mensais da obra em andamento"
     ],
     "correta": 0
   },
   {
-    "id": 2,
-    "pergunta": "O que o Cost Control avalia no assurance de estimativas?",
+    "id": 4,
+    "pergunta": "O que caracteriza o amadurecimento do orçamento no MP2?",
     "alternativas": [
-      "A consistência entre escopo e orçamento, o benchmark de custos unitários e a completude dos planos de resposta a risco — recomendando ajustes antes do Gate.",
-      "A GCI-COC junto ao GEN (gestor do contrato), a partir dos projetos entregues pelas projetistas.",
-      "Quick Win: relatório de controle de maturidade dos projetos.",
-      "Assurance da estratégia de contratação e governança das mudanças relevantes de CAPEX."
+      "É definido de uma só vez, no início do projeto",
+      "Evolui por Stages, do funcional ao executivo",
+      "Só é feito após o término da obra",
+      "É substituído pelo custo real a cada mês"
     ],
-    "correta": 0
-  }
+    "correta": 1
+  },
+  {
+    "id": 5,
+    "pergunta": "No MP2, ao 'ratificar' a maturidade do orçamento, o Cost Control:",
+    "alternativas": [
+      "Aprova formalmente a passagem de Gate",
+      "Substitui a engenharia na elaboração das PQ",
+      "Emite um parecer técnico independente de maturidade — ratificar não é aprovar",
+      "Define o cronograma de execução da obra"
+    ],
+    "correta": 3
+  },
+  {
+    "id": 6,
+    "pergunta": "Como o MP2 define a contingência do orçamento?",
+    "alternativas": [
+      "Por um percentual fixo aplicado a todo projeto",
+      "A partir da análise integrada de riscos (P80)",
+      "Pela média dos contratos já assinados",
+      "Pelo valor do custo real do mês anterior"
+    ],
+    "correta": 1
+  },
 ]
