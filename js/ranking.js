@@ -5,26 +5,14 @@ import {
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-/* =========================
-   EQUIPES FIXAS
-========================= */
-
 const NOMES_EQUIPES = [
     "Segurança Viária",
     "Pista Dupla",
     "Faixa Expressa"
 ];
 
-/* =========================
-   ESTADO
-========================= */
-
 let participantes = [];
 let visualizacaoAtual = "equipes";
-
-/* =========================
-   ELEMENTOS
-========================= */
 
 const rankingElemento =
     document.getElementById("ranking");
@@ -47,10 +35,6 @@ const botaoPessoas =
 const rankingDescricao =
     document.getElementById("rankingDescricao");
 
-/* =========================
-   EVENTOS
-========================= */
-
 botaoEquipes.addEventListener(
     "click",
     () => {
@@ -66,10 +50,6 @@ botaoPessoas.addEventListener(
         atualizarVisualizacao();
     }
 );
-
-/* =========================
-   FIRESTORE EM TEMPO REAL
-========================= */
 
 onSnapshot(
     collection(db, "participantes"),
@@ -105,10 +85,6 @@ onSnapshot(
     }
 );
 
-/* =========================
-   RESUMO FIXO
-========================= */
-
 function atualizarResumo() {
     quantidadeEquipesElemento.textContent =
         NOMES_EQUIPES.length;
@@ -116,10 +92,6 @@ function atualizarResumo() {
     quantidadeParticipantesElemento.textContent =
         participantes.length;
 }
-
-/* =========================
-   TROCA DE VISUALIZAÇÃO
-========================= */
 
 function atualizarVisualizacao() {
     limparMensagem();
@@ -132,10 +104,6 @@ function atualizarVisualizacao() {
 
     atualizarAbas();
 }
-
-/* =========================
-   RANKING POR EQUIPES
-========================= */
 
 function renderizarRankingEquipes() {
     const equipes =
@@ -239,10 +207,6 @@ function calcularPontuacaoDasEquipes() {
         }
     );
 }
-
-/* =========================
-   RANKING INDIVIDUAL
-========================= */
 
 function renderizarRankingIndividual() {
     const pessoas =
@@ -353,17 +317,9 @@ function renderizarRankingIndividual() {
     );
 }
 
-/* =========================
-   LEITURA DOS PONTOS
-========================= */
-
 function obterPontosParticipante(
     participante
 ) {
-    /*
-     * O campo criado pelo participante.js
-     * é chamado "pontos".
-     */
     const pontos =
         Number(
             participante.pontos ?? 0
@@ -392,10 +348,6 @@ function atualizarAbas() {
         !equipesAtiva
     );
 }
-
-/* =========================
-   AUXILIARES
-========================= */
 
 function obterPosicao(posicao) {
     const medalhas = {
