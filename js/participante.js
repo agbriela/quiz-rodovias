@@ -18,10 +18,6 @@ let tempo = TEMPO_POR_PERGUNTA;
 let intervalo = null;
 let respondendo = false;
 
-/* =========================
-   ELEMENTOS DA INTERFACE
-========================= */
-
 const salaEsperaElemento =
     document.getElementById("salaEspera");
 
@@ -48,10 +44,6 @@ const barraElemento =
 
 const mensagemElemento =
     document.getElementById("mensagemParticipante");
-
-/* =========================
-   INICIALIZAÇÃO
-========================= */
 
 inicializarParticipante();
 
@@ -84,10 +76,6 @@ async function inicializarParticipante() {
         );
     }
 }
-
-/* =========================
-   CARREGAR DADOS
-========================= */
 
 async function carregarPerguntas() {
     const resposta =
@@ -147,10 +135,6 @@ async function carregarDadosParticipante(
             : "";
 }
 
-/* =========================
-   CONTROLE EM TEMPO REAL
-========================= */
-
 function escutarControleDoJogo() {
     const controleRef =
         doc(db, "controle", "jogo");
@@ -204,10 +188,6 @@ function escutarControleDoJogo() {
 
             mostrarAreaQuiz();
 
-            /*
-             * Só recarrega quando o apresentador
-             * realmente muda a pergunta.
-             */
             if (
                 perguntaAtual !==
                 perguntaAnterior
@@ -232,10 +212,6 @@ function escutarControleDoJogo() {
     );
 }
 
-/* =========================
-   SALA DE ESPERA
-========================= */
-
 function mostrarSalaDeEspera() {
     clearInterval(intervalo);
 
@@ -259,10 +235,6 @@ function mostrarAreaQuiz() {
         "oculto"
     );
 }
-
-/* =========================
-   PERGUNTA
-========================= */
 
 async function carregarPergunta() {
     clearInterval(intervalo);
@@ -326,10 +298,6 @@ async function carregarPergunta() {
 
     iniciarCronometro();
 }
-
-/* =========================
-   CRONÔMETRO
-========================= */
 
 function iniciarCronometro() {
     clearInterval(intervalo);
@@ -402,10 +370,6 @@ async function registrarTempoEsgotado() {
 
     mostrarAguardandoProximaPergunta();
 }
-
-/* =========================
-   RESPOSTA
-========================= */
 
 async function responder(indice) {
     if (respondendo) {
@@ -518,10 +482,6 @@ async function responder(indice) {
     }
 }
 
-/* =========================
-   RESPOSTA ÚNICA
-========================= */
-
 function criarReferenciaResposta(
     participanteId
 ) {
@@ -555,10 +515,6 @@ async function verificarRespostaExistente() {
 
     return resposta.exists();
 }
-
-/* =========================
-   INTERFACE
-========================= */
 
 function mostrarAguardandoProximaPergunta() {
     clearInterval(intervalo);
