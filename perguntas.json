@@ -1,68 +1,233 @@
 [
   {
     "id": 1,
-    "pergunta": "O que o MP1 (Viabilidade) entrega ao final do seu ciclo?",
+    "pergunta": "No case, logo após o leilão o CAPEX do Plano de Negócios entra no Stage 0. O que marca formalmente essa entrada?",
     "alternativas": [
-      "O orçamento executivo e o planejamento detalhado da olbra",
-      "O CAPEX do Plano de Negócios, o Termo de Abertura e a declaração de escopo",
-      "O boletim de medição do avanço físico",
-      "O cronograma executivo, medições e contratos assinados"
+      "A aprovação do Plano Integrado preliminar contendo escopo, cronograma e estimativa de desembolso do projeto",
+      "O Termo de Abertura, a WBS padrão e a matriz de riscos inicial",
+      "A formalização da baseline inicial de CAPEX e do cronograma de referência para acompanhamento do investimento",
+      "A emissão do relatório de maturidade do projeto e o registro do enquadramento preliminar nos Stage Gates "
     ],
     "correta": 1
   },
   {
     "id": 2,
-    "pergunta": "Qual é o papel do Cost Control no MP1?",
+    "pergunta": "Ainda no Stage 0, qual é o papel do Cost Control no enquadramento do projeto nos Stage Gates?",
     "alternativas": [
-      "Aprovar o leilão e decidir o Go/No-Go",
-      "Elaborar o projeto de engenhariae definr as soluções técnicas",
-      "Realizar uma avaliação independente das estimativas iniciais e o benchmark de custos",
-      "Consolidar as medições e emitir a nota fiscal do investimento"
+      "Fiscaliza os critérios utilizados para o enquadramento do projeto",
+      "Consolida as informações de maturidade, riscos e premissas para suportar a discussão no Stage Gate",
+      "Ratifica o enquadramento proposto pelo Gestor do Projeto ",
+      "Audita o processo de avaliação do Stage e as revisões de CAPEX realizadas durante o desenvolvimento do projeto"
     ],
     "correta": 2
   },
   {
     "id": 3,
-    "pergunta": "Para estimar o CAPEX inicial, o MP1 se apoia principalmente em:",
+    "pergunta": "O handover pós-leilão existe para resolver qual problema do modelo atual?",
     "alternativas": [
-      "Banco de dados de custos, lições aprendidas e estudos de engenharia",
-      "Apenas na intuição do gestor do projeto",
-      "No custo real de obras já em execução no mês",
-      "Nas medições mensais da obra em andamento"
+      "A ruptura de informação entre a equipe de desenvolvimento de negócios e a de implantação. ",
+      "A dificuldade de aprovação do Projeto Executivo com todos os quantitativos",
+      "A necessidade de atualizar o CAPEX com as revisões realizadas durante o desenvolvimento dos projetos",
+      "A falta de integração entre as bases de orçamento, planejamento e acompanhamento econômico-financeiro do investimento"
     ],
     "correta": 0
   },
   {
     "id": 4,
-    "pergunta": "O que caracteriza o amadurecimento do orçamento no MP2?",
+    "pergunta": "No case, os 38,4 ha de desapropriação surgem no Projeto Básico e o orçamento sobe. Segundo o MP2, de onde nasce a contingência P80?",
     "alternativas": [
-      "Permanece praticamente inalterado desde o MP1",
-      "Evolui por Stages, do funcional ao executivo",
-      "Só é feito após o término da obra",
-      "É substituído pelo custo real a cada mês"
+      "De um percentual fixo aplicado sobre o CAPEX",
+      "Da análise quantitativa de riscos do projeto",
+      "Da média dos projetos anteriores",
+      "Da negociação com a contratada"
     ],
     "correta": 1
   },
   {
     "id": 5,
-    "pergunta": "No MP2, ao 'ratificar' a maturidade do orçamento, o Cost Control:",
+    "pergunta": "No MP2, qual é o papel do Cost Control no enquadramento do projeto nos Stage Gates?",
     "alternativas": [
-      "Aprova formalmente a passagem do projeto pelo Gate",
-      "Assume a responsabilidade pela elaboração do orçamento executivo",
-      "Emite um parecer técnico independente de maturidade — ratificar não é aprovar",
-      "Define o cronograma de execução da obra"
+      "Aprovar a avaliação do Stage Gate e recomendar a aprovação do orçamento ao fórum decisório",
+      "Recusar as premissas orçamentárias e quantitativos não aprovados",
+      "Fiscalizar a evolução das revisões orçamentárias e a aderência do orçamento à baseline aprovada",
+      "Atuar como camada de assurance independente, validando estimativas, riscos e aderência aos padrões de CAPEX"
+    ],
+    "correta": 3
+  },
+  {
+    "id": 6,
+    "pergunta": "No Gate do Stage 2, o orçamento do projeto aumentou após a identificação de novas desapropriações. Qual informação permite avaliar se a variação decorre da evolução natural do projeto ou de uma falha na estimativa inicial?",
+    "alternativas": [
+      "A comparação entre o orçamento atual, o nível de maturidade do projeto e os riscos que compõem a contingência aprovada",
+      "A análise do histórico de medições e desembolsos realizados durante a execução da obra",
+      "A avaliação dos preços unitários negociados nos contratos já formalizados para o empreendimento",
+      "A comparação entre o cronograma executivo detalhado e o avanço físico realizado pelas contratadas"
+    ],
+    "correta": 0
+  }
+  {
+    "id": 7,
+    "pergunta": "No case, os aparelhos de apoio das pontes têm lead time de 8 meses. Onde esse item deve estar registrado, segundo o MP3?",
+    "alternativas": [
+      "No planejamento executivo da futura contratada, após a definição dos fornecedores estratégicos",
+      "No cronograma detalhado de mobilização associado ao contrato de fornecimento",
+      "No plano de execução da obra e nos relatórios periódicos de acompanhamento dos contratos",
+      "No Plano de Contratações e no MACC, desde cedo "
+    ],
+    "correta": 3
+  },
+  {
+    "id": 8,
+    "pergunta": "No planejamento das contratações, o que o Cost Control avalia?",
+    "alternativas": [
+      "A compatibilidade entre os pacotes de contratação previstos e a estratégia de implantação do projeto",
+      "A rastreabilidade dos documentos, evidências e marcos associados aos processos de contratação",
+      "A coerência entre o plano de contratações, o orçamento do projeto e os impactos econômico-financeiros",
+      "Os impactos das contratações planejadas sobre o fluxo de caixa e a curva de desembolso do projeto"
     ],
     "correta": 2
   },
   {
-    "id": 6,
-    "pergunta": "Como o MP2 define a contingência do orçamento?",
+    "id": 9,
+    "pergunta": "Quem é o responsável principal pela atualização do MACC?",
     "alternativas": [
-      "Aplicando um percentual padrão a todos os projetos",
-      "A partir da análise integrada de riscos (P80)",
-      "Pela média dos contratos já assinados",
-      "Com base na diferença entre o custo previsto e o custo realizado do mês anterior"
+      "O Cost Control",
+      "Suprimentos, com apoio do Gestor do Projeto e da CPL",
+      "A Controladoria",
+      "O Gestor do Projeto com apoio da CPL"
     ],
     "correta": 1
-  }
+  },
+  {
+    "id": 10,
+    "pergunta": "No case, a medição chega sem memória de cálculo completa. Qual a consequência, segundo o MP4?",
+    "alternativas": [
+      "A medição não é aceita até a regularização",
+      "A medição é aprovada e ajustada depois",
+      "O pagamento é liberado com desconto",
+      "O contrato é automaticamente rescindido"
+    ],
+    "correta": 0
+  },
+  {
+    "id": 11,
+    "pergunta": "No modelo TO BE, quem elabora o boletim de medição e qual o papel da EcoRodovias?",
+    "alternativas": [
+      "A Eco elabora o boletim de medição, enquanto a contratada apresenta as evidências e formaliza sua concordância",
+      "O Gestor do Contrato consolida as informações recebidas das frentes de obra e emite o boletim para validação",
+      "Cost Control consolida todas as medições executadas",
+      "A contratada elabora e submete; a Eco valida quantidade, qualidade, aderência ao contrato e evidências"
+    ],
+    "correta": 3
+  },
+  {
+    "id": 12,
+    "pergunta": "No case, por que “não existe dado irrelevante” na medição?",
+    "alternativas": [
+      "Porque a obra tem grande extensão e envolve diversas frentes de serviço",
+      "Porque o boletim aprovado vira avanço físico, CPIindicador, tendência de CAPEX e base para a tomada de decisão",
+      "Porque a contratada exige precisão na elaboração do boletim e na conferência das informações apresentadas durante a medição",
+      "Porque o SAP não aceita valores baixos e exige registros financeiros acima de um limite mínimo previamente estabelecido"
+    ],
+    "correta": 1
+  },
+  {
+    "id": 13,
+    "pergunta": "No case, um avanço físico de 34% com 41% do orçamento consumido resulta em indicadores que sugerem atraso ou sobrecusto. Quais ações devem ser realizadas após esses sinais?",
+    "alternativas": [
+      "Identifica a causa-raiz e projeta o desfecho com forecast",
+      "Aumenta o orçamento total do projeto para compensar a diferença",
+      "Substitui a empreiteira contratada",
+      "Amplia o time de fiscalização"
+    ],
+    "correta": 0
+  },
+  {
+    "id": 14,
+    "pergunta": "Qual é a responsabilidade formal do Cost Control no MP5?",
+    "alternativas": [
+      "Avaliar os impactos dos pagamentos realizados sobre a evolução financeira do CAPEX",
+      "Aprovar a análise de documentação técnica utilizada na justificativa de desvios relevantes",
+      "Análise de indicadores, desvios, tendências e contingências, como camada analítica independente",
+      "Validar os relatórios de ATO, conferindo exclusivamente a documentação produzida pelos fiscais durante a execução dos serviços"
+    ],
+    "correta": 2
+  },
+  {
+    "id": 15,
+    "pergunta": "Quando o Cost Control identifica um desvio relevante, o que acontece com a matriz de riscos?",
+    "alternativas": [
+      "Nada; o desvio é apenas reportado, sem necessidade de atualização formal dos riscos ou das premissas do projeto",
+      "A contratada atualiza a matriz de riscos de forma independente",
+      "A matriz é arquivada até o fim da obra",
+      "O Gestor do Contrato/Projeto atualiza a matriz de riscos do projeto, com apoio do Cost Control"
+    ],
+    "correta": 3
+  },
+  {
+    "id": 16,
+    "pergunta": "No case, qual é a fonte do custo real que sustenta o reporte?",
+    "alternativas": [
+      "O SAP, validado pela Controladoria e reconciliado com medições e avanço físico",
+      "A planilha do gestor da obra",
+      "A estimativa do Plano de Negócios utilizada como referência inicial para o investimento previsto antes da execução da obra",
+      "O boletim enviado pela contratada contendo as medições realizadas e as evidências"
+    ],
+    "correta": 0
+  },
+  {
+    "id": 17,
+    "pergunta": "No MP6, qual é o papel do Cost Control em relação ao custo real?",
+    "alternativas": [
+      "Fechar o ativo da concessão e reportar a ANTT",
+      "Receber as informações de custo real como insumo para o cálculo dos indicadores",
+      "Aprovar o custo real após comparar com o orçamento previsto",
+      "Autorizar os registros contábeis após a avaliação dos indicadores"
+    ],
+    "correta": 1
+  },
+  {
+    "id": 18,
+    "pergunta": "Por que a “versão única” do custo real importa?",
+    "alternativas": [
+      "Para reduzir o número de contratos",
+      "Para eliminar bases paralelas e garantir um reporte confiável e auditável",
+      "Para acelerar o ritmo da obra",
+      "Para dispensar o Stage Gate"
+    ],
+    "correta": 1
+  },
+  {
+    "id": 19,
+    "pergunta": "No case, a lição sobre desapropriação em núcleo urbano vira registro. Como ela deve ser classificada, segundo o MP7?",
+    "alternativas": [
+      "Pela data do evento e pela Unidade",
+      "Pelo nome do autor e empresa contratada",
+      "Por dimensão/disciplina, Stage e tipo de ocorrência, com metadados obrigatórios",
+      "Não precisa de classificação"
+    ],
+    "correta": 2
+  },
+  {
+    "id": 20,
+    "pergunta": "O que aciona a captura do conhecimento no MP7?",
+    "alternativas": [
+      "A identificação de oportunidades de melhoria pelas equipes durante a execução",
+      "Eventos-gatilho, como decisões em Stage Gate, desvios relevantes e encerramento de projetos",
+      "No encerramento do contrato",
+      "Quando ocorre a revisão da Matriz de Riscos"
+    ],
+    "correta": 1
+  },
+  {
+    "id": 21,
+    "pergunta": "Qual o valor da lição registrada para o próximo leilão?",
+    "alternativas": [
+      "Ser insumo obrigatório em novos projetos, aparecendo antes de a estimativa ser fechada",
+      "Nenhum; serve apenas para arquivo",
+      "Substituir o Plano de Negócios",
+      "Dispensar a matriz de riscos"
+    ],
+    "correta": 0
+  },
 ]
