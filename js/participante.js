@@ -9,7 +9,7 @@ import {
     updateDoc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const TEMPO_POR_PERGUNTA = 45;
+const TEMPO_POR_PERGUNTA = 50;
 
 let perguntas = [];
 let perguntaAtual = -1;
