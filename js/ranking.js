@@ -8,7 +8,9 @@ import {
 const NOMES_EQUIPES = [
     "Segurança Viária",
     "Pista Dupla",
-    "Faixa Expressa"
+    "Faixa Expressa", 
+    "Via Marginal",
+    "Ponto de Controle"
 ];
 
 let participantes = [];
