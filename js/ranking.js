@@ -9,8 +9,8 @@ const NOMES_EQUIPES = [
     "Segurança Viária",
     "Pista Dupla",
     "Faixa Expressa", 
-    "Via Marginal",
-    "Ponto de Controle"
+    "Free Flow",
+    "Corredor Verde"
 ];
 
 let participantes = [];
