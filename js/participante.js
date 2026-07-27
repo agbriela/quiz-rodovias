@@ -1,4 +1,4 @@
-import { db } from "./firebase-config.js?v=20260727-3";
+import { db } from "./firebase-config.js?v=20260727-4";
 
 import {
     doc,
@@ -19,7 +19,10 @@ let rodadaAnterior = null;
 let tempo = TEMPO_POR_PERGUNTA;
 let intervalo = null;
 let respondendo = false;
+let respostaConcluida = false;
 let carregamentoPergunta = 0;
+let inicioPerguntaAtual = null;
+let duracaoPerguntaAtual = TEMPO_POR_PERGUNTA;
 
 const salaEsperaElemento = document.getElementById("salaEspera");
 const areaQuizElemento = document.getElementById("areaQuiz");
@@ -135,12 +138,29 @@ function processarControle(dados) {
         dados.rodadaId ??
         `${status}_${novaPergunta}`;
 
+    const inicioRecebido =
+        dados.inicioPergunta;
+
+    const inicioPergunta =
+        inicioRecebido &&
+        typeof inicioRecebido.toMillis === "function"
+            ? inicioRecebido.toMillis()
+            : null;
+
+    const duracaoPergunta =
+        Number(
+            dados.duracaoPergunta ??
+            TEMPO_POR_PERGUNTA
+        );
+
     console.log(
         "Controle atualizado:",
         {
             status,
             novaPergunta,
-            novaRodada
+            novaRodada,
+            inicioPergunta,
+            duracaoPergunta
         }
     );
 
@@ -148,7 +168,9 @@ function processarControle(dados) {
         perguntaAtual = -1;
         perguntaAnterior = -1;
         rodadaAnterior = null;
+        inicioPerguntaAtual = null;
         carregamentoPergunta++;
+        respostaConcluida = false;
 
         mostrarSalaDeEspera();
         return;
@@ -181,6 +203,12 @@ function processarControle(dados) {
     }
 
     perguntaAtual = novaPergunta;
+    inicioPerguntaAtual = inicioPergunta;
+    duracaoPerguntaAtual =
+        Number.isFinite(duracaoPergunta) &&
+        duracaoPergunta > 0
+            ? duracaoPergunta
+            : TEMPO_POR_PERGUNTA;
 
     mostrarAreaQuiz();
 
@@ -199,8 +227,23 @@ function processarControle(dados) {
 
         carregarPergunta(
             perguntaAtual,
-            novaRodada
+            novaRodada,
+            inicioPerguntaAtual,
+            duracaoPerguntaAtual
         );
+
+        return;
+    }
+
+    if (!respostaConcluida && inicioPerguntaAtual) {
+        atualizarTempoRestante();
+
+        if (tempo <= 0) {
+            registrarTempoEsgotado(
+                perguntaAtual,
+                rodadaAnterior
+            );
+        }
     }
 }
 
@@ -262,6 +305,7 @@ window.addEventListener(
 function mostrarSalaDeEspera() {
     clearInterval(intervalo);
     respondendo = false;
+    respostaConcluida = false;
 
     salaEsperaElemento.classList.remove("oculto");
     areaQuizElemento.classList.add("oculto");
@@ -272,38 +316,63 @@ function mostrarAreaQuiz() {
     areaQuizElemento.classList.remove("oculto");
 }
 
-async function carregarPergunta(indicePergunta, rodadaId) {
+async function carregarPergunta(
+    indicePergunta,
+    rodadaId,
+    inicioPergunta,
+    duracaoPergunta
+) {
     clearInterval(intervalo);
 
-    const idCarregamento = ++carregamentoPergunta;
+    const idCarregamento =
+        ++carregamentoPergunta;
 
     respondendo = false;
-    tempo = TEMPO_POR_PERGUNTA;
+    respostaConcluida = false;
+    inicioPerguntaAtual = inicioPergunta;
+    duracaoPerguntaAtual = duracaoPergunta;
 
     mensagemElemento.textContent = "";
-    mensagemElemento.classList.remove("mensagem-erro");
+    mensagemElemento.classList.remove(
+        "mensagem-erro"
+    );
 
     timerElemento.style.display = "flex";
-    timerElemento.textContent = tempo;
 
-    const pergunta = perguntas[indicePergunta];
+    atualizarTempoRestante();
+
+    const pergunta =
+        perguntas[indicePergunta];
 
     if (!pergunta) {
-        mostrarErro("Não foi possível localizar esta pergunta.");
+        mostrarErro(
+            "Não foi possível localizar esta pergunta."
+        );
         return;
     }
 
-    perguntaElemento.textContent = pergunta.pergunta;
+    perguntaElemento.textContent =
+        pergunta.pergunta;
+
     alternativasElemento.innerHTML = "";
 
-    atualizarBarraDeProgresso(indicePergunta);
+    atualizarBarraDeProgresso(
+        indicePergunta
+    );
 
     let jaRespondeu = false;
 
     try {
-        jaRespondeu = await verificarRespostaExistente(indicePergunta);
+        jaRespondeu =
+            await verificarRespostaExistente(
+                indicePergunta
+            );
     } catch (erro) {
-        console.error("Erro ao verificar resposta existente:", erro);
+        console.error(
+            "Erro ao verificar resposta existente:",
+            erro
+        );
+
         mostrarErro(
             "Falha temporária ao verificar sua resposta. Tente novamente."
         );
@@ -317,50 +386,112 @@ async function carregarPergunta(indicePergunta, rodadaId) {
         return;
     }
 
-    pergunta.alternativas.forEach((texto, indice) => {
-        const botao = document.createElement("button");
+    pergunta.alternativas.forEach(
+        (texto, indice) => {
+            const botao =
+                document.createElement("button");
 
-        botao.type = "button";
-        botao.classList.add("alternativa");
-        botao.textContent = `${letraAlternativa(indice)}) ${texto}`;
-        botao.disabled = jaRespondeu;
+            botao.type = "button";
+            botao.classList.add(
+                "alternativa"
+            );
 
-        botao.addEventListener(
-            "click",
-            () => responder(indice, indicePergunta, rodadaId)
-        );
+            botao.textContent =
+                `${letraAlternativa(indice)}) ${texto}`;
 
-        alternativasElemento.appendChild(botao);
-    });
+            botao.disabled =
+                jaRespondeu || tempo <= 0;
+
+            botao.addEventListener(
+                "click",
+                () => responder(
+                    indice,
+                    indicePergunta,
+                    rodadaId
+                )
+            );
+
+            alternativasElemento.appendChild(
+                botao
+            );
+        }
+    );
 
     if (jaRespondeu) {
+        respostaConcluida = true;
         mostrarAguardandoProximaPergunta();
         return;
     }
 
-    iniciarCronometro(indicePergunta, rodadaId);
+    if (tempo <= 0) {
+        registrarTempoEsgotado(
+            indicePergunta,
+            rodadaId
+        );
+        return;
+    }
+
+    iniciarCronometro(
+        indicePergunta,
+        rodadaId
+    );
 }
 
-function iniciarCronometro(indicePergunta, rodadaId) {
+function atualizarTempoRestante() {
+    if (!inicioPerguntaAtual) {
+        tempo = duracaoPerguntaAtual;
+    } else {
+        const decorridoEmSegundos =
+            Math.floor(
+                (
+                    Date.now() -
+                    inicioPerguntaAtual
+                ) / 1000
+            );
+
+        tempo = Math.max(
+            0,
+            duracaoPerguntaAtual -
+            decorridoEmSegundos
+        );
+    }
+
+    timerElemento.textContent =
+        tempo;
+}
+
+function iniciarCronometro(
+    indicePergunta,
+    rodadaId
+) {
     clearInterval(intervalo);
 
-    intervalo = window.setInterval(() => {
-        if (
-            indicePergunta !== perguntaAtual ||
-            rodadaId !== rodadaAnterior
-        ) {
-            clearInterval(intervalo);
-            return;
-        }
+    atualizarTempoRestante();
 
-        tempo--;
-        timerElemento.textContent = tempo;
+    intervalo = window.setInterval(
+        () => {
+            if (
+                indicePergunta !== perguntaAtual ||
+                rodadaId !== rodadaAnterior ||
+                respostaConcluida
+            ) {
+                clearInterval(intervalo);
+                return;
+            }
 
-        if (tempo <= 0) {
-            clearInterval(intervalo);
-            registrarTempoEsgotado(indicePergunta, rodadaId);
-        }
-    }, 1000);
+            atualizarTempoRestante();
+
+            if (tempo <= 0) {
+                clearInterval(intervalo);
+
+                registrarTempoEsgotado(
+                    indicePergunta,
+                    rodadaId
+                );
+            }
+        },
+        250
+    );
 }
 
 async function registrarTempoEsgotado(indicePergunta, rodadaId) {
@@ -373,6 +504,7 @@ async function registrarTempoEsgotado(indicePergunta, rodadaId) {
     }
 
     respondendo = true;
+    respostaConcluida = true;
     desabilitarAlternativas();
 
     const participanteId = localStorage.getItem("participante");
@@ -426,7 +558,18 @@ async function responder(indice, indicePergunta, rodadaId) {
         return;
     }
 
+    atualizarTempoRestante();
+
+    if (tempo <= 0) {
+        registrarTempoEsgotado(
+            indicePergunta,
+            rodadaId
+        );
+        return;
+    }
+
     respondendo = true;
+    respostaConcluida = true;
 
     clearInterval(intervalo);
     desabilitarAlternativas();
@@ -505,7 +648,21 @@ async function responder(indice, indicePergunta, rodadaId) {
         console.error("Erro ao salvar resposta:", erro);
 
         respondendo = false;
-        habilitarAlternativas();
+        respostaConcluida = false;
+        atualizarTempoRestante();
+
+        if (tempo > 0) {
+            habilitarAlternativas();
+            iniciarCronometro(
+                indicePergunta,
+                rodadaId
+            );
+        } else {
+            registrarTempoEsgotado(
+                indicePergunta,
+                rodadaId
+            );
+        }
 
         mostrarErro(
             "Não foi possível salvar sua resposta. Tente novamente."
@@ -540,6 +697,7 @@ async function verificarRespostaExistente(indicePergunta) {
 function mostrarAguardandoProximaPergunta() {
     clearInterval(intervalo);
 
+    respostaConcluida = true;
     timerElemento.textContent = "✓";
     desabilitarAlternativas();
 
@@ -553,6 +711,7 @@ function finalizarQuiz() {
 
     carregamentoPergunta++;
     respondendo = true;
+    respostaConcluida = true;
 
     mostrarAreaQuiz();
 
