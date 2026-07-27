@@ -1,4 +1,4 @@
-import { db } from "./firebase-config.js?v=20260727-4";
+import { db } from "./firebase-config.js?v=20260727-5";
 
 import {
     doc,
@@ -28,7 +28,11 @@ const salaEsperaElemento = document.getElementById("salaEspera");
 const areaQuizElemento = document.getElementById("areaQuiz");
 const nomeParticipanteElemento = document.getElementById("nomeParticipante");
 const equipeParticipanteElemento = document.getElementById("equipeParticipante");
-const perguntaElemento = document.getElementById("pergunta");
+const numeroPerguntaElemento =
+    document.getElementById("numeroPerguntaParticipante");
+
+const perguntaElemento =
+    document.getElementById("pergunta");
 const alternativasElemento = document.getElementById("alternativas");
 const timerElemento = document.getElementById("timer");
 const barraElemento = document.getElementById("barra");
@@ -307,6 +311,10 @@ function mostrarSalaDeEspera() {
     respondendo = false;
     respostaConcluida = false;
 
+    if (numeroPerguntaElemento) {
+        numeroPerguntaElemento.textContent = "";
+    }
+
     salaEsperaElemento.classList.remove("oculto");
     areaQuizElemento.classList.add("oculto");
 }
@@ -349,6 +357,11 @@ async function carregarPergunta(
             "Não foi possível localizar esta pergunta."
         );
         return;
+    }
+
+    if (numeroPerguntaElemento) {
+        numeroPerguntaElemento.textContent =
+            `Pergunta ${indicePergunta + 1} de ${perguntas.length}`;
     }
 
     perguntaElemento.textContent =
@@ -714,6 +727,11 @@ function finalizarQuiz() {
     respostaConcluida = true;
 
     mostrarAreaQuiz();
+
+    if (numeroPerguntaElemento) {
+        numeroPerguntaElemento.textContent =
+            `Pergunta ${perguntas.length} de ${perguntas.length}`;
+    }
 
     perguntaElemento.textContent = "🏆 Quiz finalizado!";
     alternativasElemento.innerHTML = "";
