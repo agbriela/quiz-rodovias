@@ -1330,6 +1330,15 @@ button:disabled:hover {
     }
 }
 
+.numero-pergunta-participante {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
 @media (max-width: 420px) {
     .ranking-pessoa-item {
         grid-template-columns: 50px minmax(0, 1fr);
