@@ -1,4 +1,4 @@
-import { db } from "./firebase-config.js?v=20260727-4";
+import { db } from "./firebase-config.js?v=20260727-5";
 
 import {
     collection,
@@ -222,7 +222,7 @@ function atualizarPainel() {
         perguntaAtual >= perguntas.length
     ) {
         numeroPerguntaElemento.textContent =
-            `${perguntas.length}/${perguntas.length}`;
+            `Pergunta ${perguntas.length} de ${perguntas.length}`;
 
         textoPerguntaElemento.textContent =
             "🏆 Quiz finalizado!";
@@ -250,7 +250,7 @@ function atualizarPainel() {
     }
 
     numeroPerguntaElemento.textContent =
-        `${perguntaAtual + 1}/${perguntas.length}`;
+        `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
 
     textoPerguntaElemento.textContent =
         pergunta.pergunta;
