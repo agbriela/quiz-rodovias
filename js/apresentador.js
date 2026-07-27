@@ -3,6 +3,7 @@ import { db } from "./firebase-config.js";
 import {
     collection,
     doc,
+    getDoc,
     getDocs,
     onSnapshot,
     setDoc,
@@ -13,6 +14,7 @@ import {
 let perguntas = [];
 let perguntaAtual = 0;
 let statusAtual = "esperando";
+let operacaoEmAndamento = false;
 
 const statusElemento =
     document.getElementById("status");
@@ -65,7 +67,10 @@ async function inicializarPainel() {
 }
 
 async function carregarPerguntas() {
-    const resposta = await fetch("./perguntas.json");
+    const resposta =
+        await fetch("./perguntas.json", {
+            cache: "no-store"
+        });
 
     if (!resposta.ok) {
         throw new Error(
@@ -75,7 +80,10 @@ async function carregarPerguntas() {
 
     perguntas = await resposta.json();
 
-    if (!Array.isArray(perguntas) || perguntas.length === 0) {
+    if (
+        !Array.isArray(perguntas) ||
+        perguntas.length === 0
+    ) {
         throw new Error(
             "O arquivo perguntas.json está vazio."
         );
@@ -86,14 +94,19 @@ async function garantirDocumentoControle() {
     const controleRef =
         doc(db, "controle", "jogo");
 
+    const snapshot =
+        await getDoc(controleRef);
+
+    if (snapshot.exists()) {
+        return;
+    }
+
     await setDoc(
         controleRef,
         {
             perguntaAtual: 0,
-            status: "esperando"
-        },
-        {
-            merge: true
+            status: "esperando",
+            rodadaId: Date.now()
         }
     );
 }
@@ -186,8 +199,13 @@ function atualizarPainel() {
 
         alternativasElemento.innerHTML = "";
 
-        botaoIniciar.disabled = false;
+        botaoIniciar.disabled =
+            operacaoEmAndamento;
+
         botaoProxima.disabled = true;
+
+        botaoProxima.textContent =
+            "Próxima pergunta";
 
         return;
     }
@@ -211,6 +229,18 @@ function atualizarPainel() {
     }
 
     const pergunta = perguntas[perguntaAtual];
+
+    if (!pergunta) {
+        textoPerguntaElemento.textContent =
+            "Pergunta não encontrada.";
+
+        alternativasElemento.innerHTML = "";
+
+        botaoIniciar.disabled = true;
+        botaoProxima.disabled = true;
+
+        return;
+    }
 
     numeroPerguntaElemento.textContent =
         `${perguntaAtual + 1}/${perguntas.length}`;
@@ -237,7 +267,9 @@ function atualizarPainel() {
     );
 
     botaoIniciar.disabled = true;
-    botaoProxima.disabled = false;
+
+    botaoProxima.disabled =
+        operacaoEmAndamento;
 
     if (perguntaAtual === perguntas.length - 1) {
         botaoProxima.textContent =
@@ -249,10 +281,18 @@ function atualizarPainel() {
 }
 
 async function iniciarQuiz() {
+    if (operacaoEmAndamento) {
+        return;
+    }
+
+    operacaoEmAndamento = true;
+    atualizarPainel();
+
     try {
         await atualizarControle({
             perguntaAtual: 0,
-            status: "em_andamento"
+            status: "em_andamento",
+            rodadaId: Date.now()
         });
 
         mostrarMensagem(
@@ -268,10 +308,20 @@ async function iniciarQuiz() {
             "Não foi possível iniciar o quiz.",
             true
         );
+    } finally {
+        operacaoEmAndamento = false;
+        atualizarPainel();
     }
 }
 
 async function proximaPergunta() {
+    if (operacaoEmAndamento) {
+        return;
+    }
+
+    operacaoEmAndamento = true;
+    atualizarPainel();
+
     try {
         const proximoIndice =
             perguntaAtual + 1;
@@ -279,7 +329,8 @@ async function proximaPergunta() {
         if (proximoIndice >= perguntas.length) {
             await atualizarControle({
                 perguntaAtual: perguntas.length,
-                status: "finalizado"
+                status: "finalizado",
+                rodadaId: Date.now()
             });
 
             mostrarMensagem(
@@ -291,7 +342,8 @@ async function proximaPergunta() {
 
         await atualizarControle({
             perguntaAtual: proximoIndice,
-            status: "em_andamento"
+            status: "em_andamento",
+            rodadaId: Date.now()
         });
 
         mostrarMensagem(
@@ -307,6 +359,9 @@ async function proximaPergunta() {
             "Não foi possível avançar.",
             true
         );
+    } finally {
+        operacaoEmAndamento = false;
+        atualizarPainel();
     }
 }
 
@@ -323,7 +378,8 @@ async function atualizarControle(dados) {
 function abrirRanking() {
     window.open(
         "ranking.html",
-        "_blank"
+        "_blank",
+        "noopener,noreferrer"
     );
 }
 
@@ -332,12 +388,14 @@ async function reiniciarQuiz() {
         "Deseja reiniciar o quiz? As respostas e pontuações serão apagadas."
     );
 
-    if (!confirmou) {
+    if (!confirmou || operacaoEmAndamento) {
         return;
     }
 
     try {
+        operacaoEmAndamento = true;
         botaoReiniciar.disabled = true;
+        atualizarPainel();
 
         mostrarMensagem(
             "Reiniciando o quiz..."
@@ -348,7 +406,8 @@ async function reiniciarQuiz() {
 
         await atualizarControle({
             perguntaAtual: 0,
-            status: "esperando"
+            status: "esperando",
+            rodadaId: Date.now()
         });
 
         mostrarMensagem(
@@ -365,7 +424,9 @@ async function reiniciarQuiz() {
             true
         );
     } finally {
+        operacaoEmAndamento = false;
         botaoReiniciar.disabled = false;
+        atualizarPainel();
     }
 }
 
@@ -375,21 +436,40 @@ async function zerarPontuacoes() {
             collection(db, "participantes")
         );
 
-    const batch =
-        writeBatch(db);
+    if (snapshot.empty) {
+        return;
+    }
 
-    snapshot.forEach(
-        participante => {
-            batch.update(
-                participante.ref,
-                {
-                    pontos: 0
-                }
+    const documentos =
+        snapshot.docs;
+
+    for (
+        let inicio = 0;
+        inicio < documentos.length;
+        inicio += 450
+    ) {
+        const lote =
+            documentos.slice(
+                inicio,
+                inicio + 450
             );
-        }
-    );
 
-    await batch.commit();
+        const batch =
+            writeBatch(db);
+
+        lote.forEach(
+            participante => {
+                batch.update(
+                    participante.ref,
+                    {
+                        pontos: 0
+                    }
+                );
+            }
+        );
+
+        await batch.commit();
+    }
 }
 
 async function apagarRespostas() {
@@ -402,16 +482,33 @@ async function apagarRespostas() {
         return;
     }
 
-    const batch =
-        writeBatch(db);
+    const documentos =
+        snapshot.docs;
 
-    snapshot.forEach(
-        resposta => {
-            batch.delete(resposta.ref);
-        }
-    );
+    for (
+        let inicio = 0;
+        inicio < documentos.length;
+        inicio += 450
+    ) {
+        const lote =
+            documentos.slice(
+                inicio,
+                inicio + 450
+            );
 
-    await batch.commit();
+        const batch =
+            writeBatch(db);
+
+        lote.forEach(
+            resposta => {
+                batch.delete(
+                    resposta.ref
+                );
+            }
+        );
+
+        await batch.commit();
+    }
 }
 
 function formatarStatus(status) {
