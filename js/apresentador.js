@@ -1,4 +1,4 @@
-import { db } from "./firebase-config.js?v=20260727-3";
+import { db } from "./firebase-config.js?v=20260727-4";
 
 import {
     collection,
@@ -6,10 +6,13 @@ import {
     getDoc,
     getDocs,
     onSnapshot,
+    serverTimestamp,
     setDoc,
     updateDoc,
     writeBatch
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const TEMPO_POR_PERGUNTA = 45;
 
 let perguntas = [];
 let perguntaAtual = 0;
@@ -106,7 +109,11 @@ async function garantirDocumentoControle() {
         {
             perguntaAtual: 0,
             status: "esperando",
-            rodadaId: Date.now()
+            rodadaId: Date.now(),
+            inicioPergunta: null,
+            duracaoPergunta: TEMPO_POR_PERGUNTA,
+            inicioPergunta: null,
+            duracaoPergunta: TEMPO_POR_PERGUNTA
         }
     );
 }
@@ -292,7 +299,9 @@ async function iniciarQuiz() {
         await atualizarControle({
             perguntaAtual: 0,
             status: "em_andamento",
-            rodadaId: Date.now()
+            rodadaId: Date.now(),
+            inicioPergunta: serverTimestamp(),
+            duracaoPergunta: TEMPO_POR_PERGUNTA
         });
 
         mostrarMensagem(
@@ -330,7 +339,8 @@ async function proximaPergunta() {
             await atualizarControle({
                 perguntaAtual: perguntas.length,
                 status: "finalizado",
-                rodadaId: Date.now()
+                rodadaId: Date.now(),
+                inicioPergunta: null
             });
 
             mostrarMensagem(
@@ -343,7 +353,9 @@ async function proximaPergunta() {
         await atualizarControle({
             perguntaAtual: proximoIndice,
             status: "em_andamento",
-            rodadaId: Date.now()
+            rodadaId: Date.now(),
+            inicioPergunta: serverTimestamp(),
+            duracaoPergunta: TEMPO_POR_PERGUNTA
         });
 
         mostrarMensagem(
@@ -407,7 +419,11 @@ async function reiniciarQuiz() {
         await atualizarControle({
             perguntaAtual: 0,
             status: "esperando",
-            rodadaId: Date.now()
+            rodadaId: Date.now(),
+            inicioPergunta: null,
+            duracaoPergunta: TEMPO_POR_PERGUNTA,
+            inicioPergunta: null,
+            duracaoPergunta: TEMPO_POR_PERGUNTA
         });
 
         mostrarMensagem(
