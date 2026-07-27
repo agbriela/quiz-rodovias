@@ -1,8 +1,9 @@
-import { db } from "./firebase-config.js";
+import { db } from "./firebase-config.js?v=20260727-3";
 
 import {
     doc,
     getDoc,
+    getDocFromServer,
     increment,
     onSnapshot,
     setDoc,
@@ -93,7 +94,8 @@ async function carregarDadosParticipante(participanteId) {
 }
 
 function escutarControleDoJogo() {
-    const controleRef = doc(db, "controle", "jogo");
+    const controleRef =
+        doc(db, "controle", "jogo");
 
     onSnapshot(
         controleRef,
@@ -103,73 +105,159 @@ function escutarControleDoJogo() {
                 return;
             }
 
-            const dados = snapshot.data();
-            const status = dados.status ?? "esperando";
-            const novaPergunta = Number(dados.perguntaAtual ?? 0);
-            const novaRodada =
-                dados.rodadaId ?? `${status}_${novaPergunta}`;
-
-            console.log("Controle atualizado:", {
-                status,
-                novaPergunta,
-                novaRodada
-            });
-
-            if (status === "esperando") {
-                perguntaAtual = -1;
-                perguntaAnterior = -1;
-                rodadaAnterior = null;
-                carregamentoPergunta++;
-
-                mostrarSalaDeEspera();
-                return;
-            }
-
-            if (status === "finalizado") {
-                finalizarQuiz();
-                return;
-            }
-
-            if (status !== "em_andamento") {
-                mostrarSalaDeEspera();
-                return;
-            }
-
-            if (
-                !Number.isInteger(novaPergunta) ||
-                novaPergunta < 0 ||
-                novaPergunta >= perguntas.length
-            ) {
-                if (novaPergunta >= perguntas.length) {
-                    finalizarQuiz();
-                } else {
-                    mostrarErro("O painel enviou uma pergunta inválida.");
-                }
-
-                return;
-            }
-
-            perguntaAtual = novaPergunta;
-            mostrarAreaQuiz();
-
-            const mudouPergunta = perguntaAtual !== perguntaAnterior;
-            const mudouRodada = novaRodada !== rodadaAnterior;
-
-            if (mudouPergunta || mudouRodada) {
-                perguntaAnterior = perguntaAtual;
-                rodadaAnterior = novaRodada;
-
-                carregarPergunta(perguntaAtual, novaRodada);
-            }
+            processarControle(
+                snapshot.data()
+            );
         },
         erro => {
-            console.error("Erro ao acompanhar jogo:", erro);
+            console.error(
+                "Erro ao acompanhar jogo:",
+                erro
+            );
+
             mostrarErro(
-                "Conexão perdida. Verifique sua internet e atualize a página."
+                "Conexão instável. Tentando reconectar..."
             );
         }
     );
 }
+
+function processarControle(dados) {
+    const status =
+        dados.status ?? "esperando";
+
+    const novaPergunta =
+        Number(
+            dados.perguntaAtual ?? 0
+        );
+
+    const novaRodada =
+        dados.rodadaId ??
+        `${status}_${novaPergunta}`;
+
+    console.log(
+        "Controle atualizado:",
+        {
+            status,
+            novaPergunta,
+            novaRodada
+        }
+    );
+
+    if (status === "esperando") {
+        perguntaAtual = -1;
+        perguntaAnterior = -1;
+        rodadaAnterior = null;
+        carregamentoPergunta++;
+
+        mostrarSalaDeEspera();
+        return;
+    }
+
+    if (status === "finalizado") {
+        finalizarQuiz();
+        return;
+    }
+
+    if (status !== "em_andamento") {
+        mostrarSalaDeEspera();
+        return;
+    }
+
+    if (
+        !Number.isInteger(novaPergunta) ||
+        novaPergunta < 0 ||
+        novaPergunta >= perguntas.length
+    ) {
+        if (novaPergunta >= perguntas.length) {
+            finalizarQuiz();
+        } else {
+            mostrarErro(
+                "O painel enviou uma pergunta inválida."
+            );
+        }
+
+        return;
+    }
+
+    perguntaAtual = novaPergunta;
+
+    mostrarAreaQuiz();
+
+    const mudouPergunta =
+        perguntaAtual !== perguntaAnterior;
+
+    const mudouRodada =
+        novaRodada !== rodadaAnterior;
+
+    if (mudouPergunta || mudouRodada) {
+        perguntaAnterior =
+            perguntaAtual;
+
+        rodadaAnterior =
+            novaRodada;
+
+        carregarPergunta(
+            perguntaAtual,
+            novaRodada
+        );
+    }
+}
+
+async function sincronizarControleComServidor() {
+    if (!navigator.onLine) {
+        mostrarErro(
+            "Sem conexão com a internet. Tentando reconectar..."
+        );
+        return;
+    }
+
+    try {
+        const controleRef =
+            doc(db, "controle", "jogo");
+
+        const snapshot =
+            await getDocFromServer(
+                controleRef
+            );
+
+        if (!snapshot.exists()) {
+            return;
+        }
+
+        processarControle(
+            snapshot.data()
+        );
+    } catch (erro) {
+        console.warn(
+            "Não foi possível sincronizar com o servidor:",
+            erro
+        );
+
+        mostrarErro(
+            "Conexão instável. Tentando recuperar o jogo..."
+        );
+    }
+}
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+        if (!document.hidden) {
+            sincronizarControleComServidor();
+        }
+    }
+);
+
+window.addEventListener(
+    "online",
+    sincronizarControleComServidor
+);
+
+window.addEventListener(
+    "focus",
+    sincronizarControleComServidor
+);
 
 function mostrarSalaDeEspera() {
     clearInterval(intervalo);
