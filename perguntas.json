@@ -136,9 +136,9 @@
     "pergunta": "No case, um avanço físico de 34% com 41% do orçamento consumido resulta em indicadores que sugerem atraso ou sobrecusto. Quais ações devem ser realizadas após esses sinais?",
     "alternativas": [
       "Identifica a causa-raiz e projeta o desfecho com forecast",
-      "Aumenta o orçamento total do projeto para compensar a diferença",
-      "Substitui a empreiteira contratada",
-      "Amplia o time de fiscalização"
+      "Aumenta o orçamento, através da contingencia total do projeto para compensar a diferença",
+      "Emite PDO, a fim de possibilitar a medição",
+      "Revisa o cronograma físico-financeiro a fim de atualizar o avanço"
     ],
     "correta": 0
   },
@@ -157,9 +157,9 @@
     "id": 15,
     "pergunta": "Quando o Cost Control identifica um desvio relevante, o que acontece com a matriz de riscos?",
     "alternativas": [
-      "Nada; o desvio é apenas reportado, sem necessidade de atualização formal dos riscos ou das premissas do projeto",
-      "A contratada atualiza a matriz de riscos de forma independente",
-      "A matriz é arquivada até o fim da obra",
+      "O desvio é reportado, sem necessidade de atualização formal dos riscos ou das premissas do projeto",
+      "A contratada atualiza a matriz de riscos de forma independente, a fim de anexar no boletim de medição",
+      "Cost Control atualiza a matriz de riscos e reporta o dado ao gestor do projeto",
       "O Gestor do Contrato/Projeto atualiza a matriz de riscos do projeto, com apoio do Cost Control"
     ],
     "correta": 3
@@ -169,7 +169,7 @@
     "pergunta": "No case, qual é a fonte do custo real que sustenta o reporte?",
     "alternativas": [
       "O SAP, validado pela Controladoria e reconciliado com medições e avanço físico",
-      "A planilha do gestor da obra",
+      "A planilha de medição validada pela equipe de implantação",
       "A estimativa do Plano de Negócios utilizada como referência inicial para o investimento previsto antes da execução da obra",
       "O boletim enviado pela contratada contendo as medições realizadas e as evidências"
     ],
@@ -179,10 +179,10 @@
     "id": 17,
     "pergunta": "No MP6, qual é o papel do Cost Control em relação ao custo real?",
     "alternativas": [
-      "Fechar o ativo da concessão e reportar a ANTT",
+      "Fechar o ativo da concessão, mediante a alinhamento com o comitê executivo",
       "Receber as informações de custo real como insumo para o cálculo dos indicadores",
       "Aprovar o custo real após comparar com o orçamento previsto",
-      "Autorizar os registros contábeis após a avaliação dos indicadores"
+      "Analisar e autorizar os registros contábeis após a avaliação dos indicadores"
     ],
     "correta": 1
   },
@@ -192,8 +192,8 @@
     "alternativas": [
       "Para reduzir o número de contratos",
       "Para eliminar bases paralelas e garantir um reporte confiável e auditável",
-      "Para acelerar o ritmo da obra",
-      "Para dispensar o Stage Gate"
+      "Para evitar reclassificações, após o lançamento dos custos",
+      "Para garantir a aprovação e a governança do projeto no Stage"
     ],
     "correta": 1
   },
@@ -201,10 +201,10 @@
     "id": 19,
     "pergunta": "No case, a lição sobre desapropriação em núcleo urbano vira registro. Como ela deve ser classificada, segundo o MP7?",
     "alternativas": [
-      "Pela data do evento e pela Unidade",
+      "Pela data do evento e pela Unidade e KM da rodovia",
       "Pelo nome do autor e empresa contratada",
       "Por dimensão/disciplina, Stage e tipo de ocorrência, com metadados obrigatórios",
-      "Não precisa de classificação"
+      "Pela concessão, gestor do projeto e contratada"
     ],
     "correta": 2
   },
@@ -224,9 +224,9 @@
     "pergunta": "Qual o valor da lição registrada para o próximo leilão?",
     "alternativas": [
       "Ser insumo obrigatório em novos projetos, aparecendo antes de a estimativa ser fechada",
-      "Nenhum; serve apenas para arquivo",
-      "Substituir o Plano de Negócios",
-      "Dispensar a matriz de riscos"
+      "Serve como histórico para definição de contingenciamento",
+      "Como insumo para o Plano de Negócios",
+      "Facilitar a elaboração e posterior atualização da matriz de risco"
     ],
     "correta": 0
   }
